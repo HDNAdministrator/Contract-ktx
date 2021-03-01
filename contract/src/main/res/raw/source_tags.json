@@ -1,0 +1,39 @@
+{
+    "pt_PT": [
+        {
+            "type": 0,
+            "name": "Receita Nível Individual"
+        },
+        {
+            "type": 1,
+            "name": "Receita Nível de Equipa"
+        },
+        {
+            "type": 2,
+            "name": "Receita Nível de Departamento"
+        },
+        {
+            "type": 3,
+            "name": "Receita Nível da Empresa"
+        }
+    ],
+    
+    "en_GB": [
+        {
+            "type": 0,
+            "name": "Individual Revenue"
+        },
+        {
+            "type": 1,
+            "name": "Team Revenue"
+        },
+        {
+            "type": 2,
+            "name": "Department Revenue"
+        },
+        {
+            "type": 3,
+            "name": "Company Revenue"
+        }
+    ]
+}
