@@ -4,6 +4,7 @@ import android.util.Base64
 import android.util.Base64.NO_WRAP
 import com.google.gson.*
 import java.lang.reflect.Type
+import java.util.*
 
 class ByteArrayTypeAdapter : JsonSerializer<ByteArray>, JsonDeserializer<ByteArray> {
     override fun serialize(src: ByteArray?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement? = src?.run { JsonPrimitive(Base64.encodeToString(this, NO_WRAP)) }
