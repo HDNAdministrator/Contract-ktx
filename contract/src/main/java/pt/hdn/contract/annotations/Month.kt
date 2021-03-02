@@ -2,8 +2,8 @@ package pt.hdn.contract.annotations
 
 import androidx.annotation.IntDef
 
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
 @IntDef(Month.JANUARY, Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY, Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER)
 annotation class Month {
     companion object {
