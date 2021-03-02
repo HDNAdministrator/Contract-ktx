@@ -3,7 +3,7 @@ package pt.hdn.contract.annotations
 import androidx.annotation.IntDef
 
 @Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.PROPERTY)
 @IntDef(SchemaType.FIX, SchemaType.RATE, SchemaType.COMMISSION, SchemaType.OBJECTIVE, SchemaType.THRESHOLD)
 annotation class SchemaType {
     companion object {

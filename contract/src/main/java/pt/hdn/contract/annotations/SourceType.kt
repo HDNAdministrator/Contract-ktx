@@ -3,7 +3,9 @@ package pt.hdn.contract.annotations
 import androidx.annotation.IntDef
 
 @Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.PROPERTY
+)
 @IntDef(SourceType.NONE, SourceType.PERSON_PROFIT, SourceType.TEAM_PROFIT, SourceType.DEPARTMENT_PROFIT, SourceType.COMPANY_PROFIT, SourceType.DISTANCE, SourceType.TIME)
 annotation class SourceType {
     companion object {
