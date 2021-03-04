@@ -1,229 +1,229 @@
 {
     "pt_PT": [
         {
-            "type": 1,
+            "id": 1,
             "name": "1\u00BA"
         },
         {
-            "type": 2,
+            "id": 2,
             "name": "2\u00BA"
         },
         {
-            "type": 3,
+            "id": 3,
             "name": "3\u00BA"
         },
         {
-            "type": 4,
+            "id": 4,
             "name": "4\u00BA"
         },
         {
-            "type": 5,
+            "id": 5,
             "name": "5\u00BA"
         },
         {
-            "type": 6,
+            "id": 6,
             "name": "6\u00BA"
         },
         {
-            "type": 7,
+            "id": 7,
             "name": "7\u00BA"
         },
         {
-            "type": 8,
+            "id": 8,
             "name": "8\u00BA"
         },
         {
-            "type": 9,
+            "id": 9,
             "name": "9\u00BA"
         },
         {
-            "type": 10,
+            "id": 10,
             "name": "10\u00BA"
         },
         {
-            "type": 11,
+            "id": 11,
             "name": "11\u00BA"
         },
         {
-            "type": 12,
+            "id": 12,
             "name": "12\u00BA"
         },
         {
-            "type": 13,
+            "id": 13,
             "name": "13\u00BA"
         },
         {
-            "type": 14,
+            "id": 14,
             "name": "14\u00BA"
         },
         {
-            "type": 15,
+            "id": 15,
             "name": "15\u00BA"
         },
         {
-            "type": 16,
+            "id": 16,
             "name": "16\u00BA"
         },
         {
-            "type": 17,
+            "id": 17,
             "name": "17\u00BA"
         },
         {
-            "type": 18,
+            "id": 18,
             "name": "18\u00BA"
         },
         {
-            "type": 19,
+            "id": 19,
             "name": "19\u00BA"
         },
         {
-            "type": 20,
+            "id": 20,
             "name": "20\u00BA"
         },
         {
-            "type": 21,
+            "id": 21,
             "name": "21\u00BA"
         },
         {
-            "type": 22,
+            "id": 22,
             "name": "22\u00BA"
         },
         {
-            "type": 23,
+            "id": 23,
             "name": "23\u00BA"
         },
         {
-            "type": 24,
+            "id": 24,
             "name": "24\u00BA"
         },
         {
-            "type": 25,
+            "id": 25,
             "name": "25\u00BA"
         },
         {
-            "type": 26,
+            "id": 26,
             "name": "26\u00BA"
         },
         {
-            "type": 27,
+            "id": 27,
             "name": "27\u00BA"
         },
         {
-            "type": 28,
+            "id": 28,
             "name": "28\u00BA"
         }
     ],
     "en_GB": [
         {
-            "type": 1,
+            "id": 1,
             "name": "1st"
         },
         {
-            "type": 2,
+            "id": 2,
             "name": "2nd"
         },
         {
-            "type": 3,
+            "id": 3,
             "name": "3rd"
         },
         {
-            "type": 4,
+            "id": 4,
             "name": "4th"
         },
         {
-            "type": 5,
+            "id": 5,
             "name": "5th"
         },
         {
-            "type": 6,
+            "id": 6,
             "name": "6th"
         },
         {
-            "type": 7,
+            "id": 7,
             "name": "7th"
         },
         {
-            "type": 8,
+            "id": 8,
             "name": "8th"
         },
         {
-            "type": 9,
+            "id": 9,
             "name": "9th"
         },
         {
-            "type": 10,
+            "id": 10,
             "name": "10th"
         },
         {
-            "type": 11,
+            "id": 11,
             "name": "11th"
         },
         {
-            "type": 12,
+            "id": 12,
             "name": "12th"
         },
         {
-            "type": 13,
+            "id": 13,
             "name": "13th"
         },
         {
-            "type": 14,
+            "id": 14,
             "name": "14th"
         },
         {
-            "type": 15,
+            "id": 15,
             "name": "15th"
         },
         {
-            "type": 16,
+            "id": 16,
             "name": "16th"
         },
         {
-            "type": 17,
+            "id": 17,
             "name": "17th"
         },
         {
-            "type": 18,
+            "id": 18,
             "name": "18th"
         },
         {
-            "type": 19,
+            "id": 19,
             "name": "19th"
         },
         {
-            "type": 20,
+            "id": 20,
             "name": "20th"
         },
         {
-            "type": 21,
+            "id": 21,
             "name": "21st"
         },
         {
-            "type": 22,
+            "id": 22,
             "name": "22nd"
         },
         {
-            "type": 23,
+            "id": 23,
             "name": "23rd"
         },
         {
-            "type": 24,
+            "id": 24,
             "name": "24th"
         },
         {
-            "type": 25,
+            "id": 25,
             "name": "25th"
         },
         {
-            "type": 26,
+            "id": 26,
             "name": "26th"
         },
         {
-            "type": 27,
+            "id": 27,
             "name": "27th"
         },
         {
-            "type": 28,
+            "id": 28,
             "name": "28th"
         }
     ]

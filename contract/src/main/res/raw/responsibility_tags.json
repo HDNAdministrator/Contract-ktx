@@ -1,22 +1,22 @@
 {
     "pt_PT": [
         {
-            "type": 0,
+            "id": 0,
             "name": "Diversos"
         },
         {
-            "type": 1,
+            "id": 1,
             "name": "Combustível"
         }
     ],
     
     "en_GB": [
         {
-            "type": 0,
+            "id": 0,
             "name": "Miscellaneous"
         },
         {
-            "type": 1,
+            "id": 1,
             "name": "Fuel"
         }
     ]

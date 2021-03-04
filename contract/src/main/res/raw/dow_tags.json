@@ -1,61 +1,61 @@
 {
     "pt_PT": [
         {
-            "type": 0,
+            "id": 0,
             "name": "Segunda"
         },
         {
-            "type": 1,
+            "id": 1,
             "name": "Terça"
         },
         {
-            "type": 2,
+            "id": 2,
             "name": "Quarta"
         },
         {
-            "type": 3,
+            "id": 3,
             "name": "Quinta"
         },
         {
-            "type": 4,
+            "id": 4,
             "name": "Sexta"
         },
         {
-            "type": 5,
+            "id": 5,
             "name": "Sábado"
         },
         {
-            "type": 6,
+            "id": 6,
             "name": "Domingo"
         }
     ],
     "en_GB": [
         {
-            "type": 0,
+            "id": 0,
             "name": "Monday"
         },
         {
-            "type": 1,
+            "id": 1,
             "name": "Tuesday"
         },
         {
-            "type": 2,
+            "id": 2,
             "name": "Wednsday"
         },
         {
-            "type": 3,
+            "id": 3,
             "name": "Thurdays"
         },
         {
-            "type": 4,
+            "id": 4,
             "name": "Friday"
         },
         {
-            "type": 5,
+            "id": 5,
             "name": "Saturday"
         },
         {
-            "type": 6,
+            "id": 6,
             "name": "Sunday"
         }
     ]
