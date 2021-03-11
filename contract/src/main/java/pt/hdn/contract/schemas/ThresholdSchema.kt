@@ -19,22 +19,18 @@ data class ThresholdSchema(
     @Expose @SourceType override val source: Int,
     @Expose val threshold: BigDecimal,
     @Expose val isAbove: Boolean
-) : Schema, Parcelable {
+) : Schema {
 
     //region vars
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.COMMISSION
     @IgnoredOnParcel override val isValid: Boolean; get() = bonus > ZERO && threshold > ZERO
     //endregion vars
 
-    companion object : Parceler<ThresholdSchema>, Schema.Companion {
-        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) { writeString(bonus.toString()); writeInt(source); writeString(threshold.toString()); writeInt(if (isAbove) 1 else 0) }
-        }
+    companion object : Parceler<ThresholdSchema>, Deserializer<ThresholdSchema> {
+        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(bonus.toString()); writeInt(source); writeString(threshold.toString()); writeInt(if (isAbove) 1 else 0) } }
 
-        override fun create(parcel: Parcel): ThresholdSchema {
-            return ThresholdSchema(BigDecimal(parcel.readString()), parcel.readInt(), BigDecimal(parcel.readString()), parcel.readInt() == 1)
-        }
+        override fun create(parcel: Parcel): ThresholdSchema = ThresholdSchema(BigDecimal(parcel.readString()), parcel.readInt(), BigDecimal(parcel.readString()), parcel.readInt() == 1)
 
-        override fun deserialize(json: JsonObject) = with(json) { ThresholdSchema(this[Parameter.BONUS].asBigDecimal, this[Parameter.SOURCE].asInt, this[Parameter.THRESHOLD].asBigDecimal, this[Parameter.IS_ABOVE].asBoolean) }
+        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { with(Parameter) { ThresholdSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(THRESHOLD).asBigDecimal, get(IS_ABOVE).asBoolean) } }
     }
 }

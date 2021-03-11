@@ -1,7 +1,6 @@
 package pt.hdn.contract.schemas
 
 import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
@@ -16,7 +15,7 @@ import java.math.BigDecimal.ZERO
 @Parcelize
 data class FixSchema(
     @Expose val fix: BigDecimal
-) : Schema, Parcelable {
+) : Schema {
 
     //region vars
     @IgnoredOnParcel @Expose @SourceType override val source: Int = SourceType.NONE
@@ -24,11 +23,11 @@ data class FixSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = fix > ZERO
     //endregion vars
 
-    companion object : Parceler<FixSchema>, Schema.Companion {
+    companion object : Parceler<FixSchema>, Deserializer<FixSchema> {
         override fun FixSchema.write(parcel: Parcel, flags: Int) { parcel.writeString(fix.toString()) }
 
         override fun create(parcel: Parcel): FixSchema = FixSchema(BigDecimal(parcel.readString()))
 
-        override fun deserialize(json: JsonObject) = with(json) { FixSchema(this[Parameter.FIX].asBigDecimal) }
+        override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[Parameter.FIX].asBigDecimal) }
     }
 }

@@ -20,22 +20,18 @@ data class CommissionSchema(
     @Expose @SourceType override val source: Int,
     @Expose val lowerBound: BigDecimal?,
     @Expose val upperBound: BigDecimal?
-) : Schema, Parcelable {
+) : Schema {
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
     @IgnoredOnParcel override val isValid: Boolean; get() = cut > ZERO && lowerBound?.let { it >= ZERO } == true && upperBound?.let { it <= ONE } == true && lowerBound < upperBound
     //endregion vars
 
-    companion object : Parceler<CommissionSchema>, Schema.Companion {
-        override fun CommissionSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) { writeString(cut.toString()); writeInt(source); writeString(lowerBound?.toString()); writeString(upperBound?.toString()); writeInt(id) }
-        }
+    companion object : Parceler<CommissionSchema>, Deserializer<CommissionSchema> {
+        override fun CommissionSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(cut.toString()); writeInt(source); writeString(lowerBound?.toString()); writeString(upperBound?.toString()); writeInt(id) } }
 
-        override fun create(parcel: Parcel): CommissionSchema {
-            return with(parcel) { CommissionSchema(BigDecimal(readString()), readInt(), readString()?.let { BigDecimal(it) }, readString()?.let { BigDecimal(it) }) }
-        }
+        override fun create(parcel: Parcel): CommissionSchema = with(parcel) { CommissionSchema(BigDecimal(readString()), readInt(), readString()?.let { BigDecimal(it) }, readString()?.let { BigDecimal(it) }) }
 
-        override fun deserialize(json: JsonObject) = with(json) { CommissionSchema(this[Parameter.CUT].asBigDecimal, this[Parameter.SOURCE].asInt, this[Parameter.LOWER_BOUND]?.asBigDecimal, this[Parameter.UPPER_BOUND]?.asBigDecimal) }
+        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { with(Parameter) { CommissionSchema(get(CUT).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND)?.asBigDecimal) } }
     }
 }
