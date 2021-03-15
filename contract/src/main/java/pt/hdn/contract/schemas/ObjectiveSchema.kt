@@ -1,7 +1,6 @@
 package pt.hdn.contract.schemas
 
 import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
@@ -11,26 +10,26 @@ import pt.hdn.contract.annotations.Parameter
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
-import java.math.BigDecimal.ZERO
 import java.math.BigDecimal.ONE
+import java.math.BigDecimal.ZERO
 
 @Parcelize
 data class ObjectiveSchema(
-    @Expose val bonus: BigDecimal,
-    @Expose @SourceType override val source: Int,
-    @Expose val lowerBound: BigDecimal?,
-    @Expose val upperBound: BigDecimal?
+    @Expose var bonus: BigDecimal? = null,
+    @Expose @SourceType override var source: Int? = null,
+    @Expose var lowerBound: BigDecimal? = null,
+    @Expose var upperBound: BigDecimal? = null
 ) : Schema {
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
-    @IgnoredOnParcel override val isValid: Boolean; get() = bonus > ZERO && lowerBound?.let { it >= ZERO } == true && upperBound?.let { it <= ONE } == true && lowerBound < upperBound
+    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && lowerBound?.let { it >= ZERO } == true && upperBound?.let { it <= ONE } == true && lowerBound!! < upperBound
     //endregion vars
 
     companion object : Parceler<ObjectiveSchema>, Deserializer<ObjectiveSchema> {
-        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(bonus.toString()); writeInt(source); writeString(lowerBound?.toString()); writeString(upperBound?.toString()) } }
+        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(bonus.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(lowerBound?.toString()); writeString(upperBound?.toString()) } }
 
-        override fun create(parcel: Parcel): ObjectiveSchema = ObjectiveSchema(BigDecimal(parcel.readString()), parcel.readInt(), parcel.readString()?.let { BigDecimal(it) }, parcel.readString()?.let { BigDecimal(it) })
+        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) { ObjectiveSchema (readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
 
         override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { with(Parameter) { ObjectiveSchema (get(BONUS).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND).asBigDecimal) }}
     }

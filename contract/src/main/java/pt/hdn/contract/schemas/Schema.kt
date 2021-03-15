@@ -5,7 +5,7 @@ import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 
 interface Schema: Parcelable {
-    @SourceType val source: Int
+    @SourceType var source: Int?
     @SchemaType val id: Int
     val isValid: Boolean
 }
