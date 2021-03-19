@@ -15,6 +15,14 @@
         {
             "id": 3,
             "name": "Receita Nível da Empresa"
+        },
+        {
+            "id": 4,
+            "name": "Por Distância"
+        },
+        {
+            "id": 5,
+            "name": "Por Tempo"
         }
     ],
     "en_GB": [
@@ -33,6 +41,14 @@
         {
             "id": 3,
             "name": "Company Revenue"
+        },
+        {
+            "id": 4,
+            "name": "By Distance"
+        },
+        {
+            "id": 5,
+            "name": "By Time"
         }
     ]
 }
