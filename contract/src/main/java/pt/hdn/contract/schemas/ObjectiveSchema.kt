@@ -23,7 +23,7 @@ data class ObjectiveSchema(
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
-    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && lowerBound?.let { it >= ZERO } == true && upperBound?.let { it <= ONE } == true && lowerBound!! < upperBound
+    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
     //endregion vars
 
     companion object : Parceler<ObjectiveSchema>, Deserializer<ObjectiveSchema> {

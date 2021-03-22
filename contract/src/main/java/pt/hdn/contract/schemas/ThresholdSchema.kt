@@ -22,7 +22,7 @@ data class ThresholdSchema(
 
     //region vars
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.COMMISSION
-    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && threshold?.let { it > ZERO } == true
+    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && threshold?.let { it > ZERO } == true && isAbove != null
     //endregion vars
 
     companion object : Parceler<ThresholdSchema>, Deserializer<ThresholdSchema> {
