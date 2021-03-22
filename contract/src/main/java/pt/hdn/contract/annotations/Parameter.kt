@@ -1,9 +1,10 @@
 package pt.hdn.contract.annotations
 
 import androidx.annotation.StringDef
+import kotlin.annotation.AnnotationTarget.*
 
 @Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
+@Target(CLASS, TYPE, VALUE_PARAMETER, FIELD)
 @StringDef(Parameter.FIX, Parameter.RATE, Parameter.CUT, Parameter.BONUS, Parameter.SOURCE, Parameter.LOWER_BOUND, Parameter.UPPER_BOUND, Parameter.THRESHOLD, Parameter.IS_ABOVE)
 annotation class Parameter {
     companion object {

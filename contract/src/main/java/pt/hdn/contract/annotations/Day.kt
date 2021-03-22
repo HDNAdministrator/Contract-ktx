@@ -1,9 +1,10 @@
 package pt.hdn.contract.annotations
 
 import androidx.annotation.IntDef
+import kotlin.annotation.AnnotationTarget.*
 
 @Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
+@Target(CLASS, TYPE, VALUE_PARAMETER, PROPERTY)
 @IntDef(Day.DAY_1, Day.DAY_2, Day.DAY_3, Day.DAY_4, Day.DAY_5, Day.DAY_6, Day.DAY_7, Day.DAY_8, Day.DAY_9, Day.DAY_10, Day.DAY_11, Day.DAY_12, Day.DAY_13, Day.DAY_14, Day.DAY_15, Day.DAY_16, Day.DAY_17, Day.DAY_18, Day.DAY_19, Day.DAY_20, Day.DAY_21, Day.DAY_22, Day.DAY_23, Day.DAY_24, Day.DAY_25, Day.DAY_26, Day.DAY_27, Day.DAY_28)
 annotation class Day {
     companion object {

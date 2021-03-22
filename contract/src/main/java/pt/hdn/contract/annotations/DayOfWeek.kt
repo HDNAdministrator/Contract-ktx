@@ -1,9 +1,10 @@
 package pt.hdn.contract.annotations
 
 import androidx.annotation.IntDef
+import kotlin.annotation.AnnotationTarget.*
 
-@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.SOURCE)
+@Target(CLASS, TYPE, VALUE_PARAMETER, PROPERTY)
 @IntDef(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
 annotation class DayOfWeek {
     companion object {
