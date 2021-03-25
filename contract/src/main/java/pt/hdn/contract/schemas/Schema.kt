@@ -8,4 +8,6 @@ interface Schema: Parcelable, Cloneable {
     @SourceType var source: Int?
     @SchemaType val id: Int
     val isValid: Boolean
+
+    override fun clone(): Schema
 }
