@@ -30,4 +30,6 @@ data class FixSchema(
 
         override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[Parameter.FIX].asBigDecimal) }
     }
+
+    override fun clone(): FixSchema = copy()
 }

@@ -30,4 +30,6 @@ data class RateSchema(
 
         override fun deserialize(json: JsonObject): RateSchema = with(json) { with(Parameter) { RateSchema (get(RATE).asBigDecimal, get(SOURCE).asInt) } }
     }
+
+    override fun clone(): RateSchema = copy()
 }

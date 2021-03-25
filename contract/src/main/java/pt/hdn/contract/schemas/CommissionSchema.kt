@@ -33,4 +33,6 @@ data class CommissionSchema(
 
         override fun deserialize(json: JsonObject): CommissionSchema = with(json) { with(Parameter) { CommissionSchema(get(CUT).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND)?.asBigDecimal) } }
     }
+
+    override fun clone(): CommissionSchema = copy()
 }
