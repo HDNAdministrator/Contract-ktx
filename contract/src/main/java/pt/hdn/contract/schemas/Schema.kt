@@ -9,5 +9,5 @@ interface Schema: Parcelable, Cloneable {
     @SchemaType val id: Int
     val isValid: Boolean
 
-    override fun clone(): Schema
+    public override fun clone(): Schema
 }
