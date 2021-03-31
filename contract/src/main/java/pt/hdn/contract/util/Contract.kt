@@ -99,4 +99,5 @@ data class Contract(
         return result
     }
 
+    fun toJson(): String = gsonBuilder.create().toJson(this)
 }
