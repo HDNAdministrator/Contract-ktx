@@ -6,12 +6,16 @@ import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
-import pt.hdn.contract.annotations.Parameter
+import pt.hdn.contract.annotations.Parameter.Companion.CUT
+import pt.hdn.contract.annotations.Parameter.Companion.LOWER_BOUND
+import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
+import pt.hdn.contract.annotations.Parameter.Companion.UPPER_BOUND
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
 import java.math.BigDecimal.ONE
 import java.math.BigDecimal.ZERO
+import java.math.RoundingMode.HALF_EVEN
 
 @Parcelize
 data class CommissionSchema(
@@ -31,8 +35,10 @@ data class CommissionSchema(
 
         override fun create(parcel: Parcel): CommissionSchema = with(parcel) { CommissionSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
 
-        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { with(Parameter) { CommissionSchema(get(CUT).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND)?.asBigDecimal) } }
+        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { CommissionSchema(get(CUT).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND)?.asBigDecimal) }
     }
+
+    override fun calculate(value: BigDecimal): BigDecimal = (cut!! * value).setScale(2, HALF_EVEN)
 
     override fun clone(): CommissionSchema = copy()
 }

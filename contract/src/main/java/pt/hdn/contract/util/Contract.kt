@@ -36,6 +36,8 @@ data class Contract(
 
     companion object {
         val gsonBuilder: GsonBuilder by lazy { GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter()).registerTypeAdapter(Schema::class.java, SchemaTypeAdapter()).registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter()) }
+
+        fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
     }
 
     override fun equals(other: Any?): Boolean {

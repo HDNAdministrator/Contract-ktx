@@ -6,11 +6,12 @@ import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
-import pt.hdn.contract.annotations.Parameter
+import pt.hdn.contract.annotations.Parameter.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
+import java.math.RoundingMode
 
 @Parcelize
 data class FixSchema(
@@ -28,8 +29,10 @@ data class FixSchema(
 
         override fun create(parcel: Parcel): FixSchema = with(parcel) { FixSchema(readString()?.toBigDecimal()) }
 
-        override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[Parameter.FIX].asBigDecimal) }
+        override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[FIX].asBigDecimal) }
     }
+
+    override fun calculate(value: BigDecimal): BigDecimal = fix!!
 
     override fun clone(): FixSchema = copy()
 }

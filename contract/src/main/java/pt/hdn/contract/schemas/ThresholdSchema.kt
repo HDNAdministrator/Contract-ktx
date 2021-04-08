@@ -6,11 +6,15 @@ import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
-import pt.hdn.contract.annotations.Parameter
+import pt.hdn.contract.annotations.Parameter.Companion.BONUS
+import pt.hdn.contract.annotations.Parameter.Companion.IS_ABOVE
+import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
+import pt.hdn.contract.annotations.Parameter.Companion.THRESHOLD
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
+import java.math.RoundingMode
 
 @Parcelize
 data class ThresholdSchema(
@@ -30,8 +34,10 @@ data class ThresholdSchema(
 
         override fun create(parcel: Parcel): ThresholdSchema = with(parcel) { ThresholdSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), if (readInt() == 1) readInt() == 1 else null) }
 
-        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { with(Parameter) { ThresholdSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(THRESHOLD).asBigDecimal, get(IS_ABOVE).asBoolean) } }
+        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { ThresholdSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(THRESHOLD).asBigDecimal, get(IS_ABOVE).asBoolean) }
     }
+
+    override fun calculate(value: BigDecimal): BigDecimal = bonus!!
 
     override fun clone(): ThresholdSchema = copy()
 }
