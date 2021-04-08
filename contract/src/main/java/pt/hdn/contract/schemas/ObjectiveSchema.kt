@@ -38,7 +38,7 @@ data class ObjectiveSchema(
         override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { ObjectiveSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND).asBigDecimal) }
     }
 
-    override fun calculate(value: BigDecimal): BigDecimal = bonus!!
+    override fun calculate(value: BigDecimal?): BigDecimal = bonus!!
 
     override fun clone(): ObjectiveSchema = copy()
 }

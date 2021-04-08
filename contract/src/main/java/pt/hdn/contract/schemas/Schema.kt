@@ -10,7 +10,7 @@ interface Schema: Parcelable, Cloneable {
     @SchemaType val id: Int
     val isValid: Boolean
 
-    fun calculate(value: BigDecimal): BigDecimal
+    fun calculate(value: BigDecimal? = null): BigDecimal
 
     public override fun clone(): Schema
 }

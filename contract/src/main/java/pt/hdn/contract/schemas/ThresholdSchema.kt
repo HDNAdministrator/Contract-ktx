@@ -37,7 +37,7 @@ data class ThresholdSchema(
         override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { ThresholdSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(THRESHOLD).asBigDecimal, get(IS_ABOVE).asBoolean) }
     }
 
-    override fun calculate(value: BigDecimal): BigDecimal = bonus!!
+    override fun calculate(value: BigDecimal?): BigDecimal = bonus!!
 
     override fun clone(): ThresholdSchema = copy()
 }

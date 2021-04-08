@@ -33,7 +33,7 @@ data class RateSchema(
         override fun deserialize(json: JsonObject): RateSchema = with(json) { RateSchema(get(RATE).asBigDecimal, get(SOURCE).asInt) }
     }
 
-    override fun calculate(value: BigDecimal): BigDecimal = (rate!! * value).setScale(2, HALF_EVEN)
+    override fun calculate(value: BigDecimal?): BigDecimal = (rate!! * value!!).setScale(2, HALF_EVEN)
 
     override fun clone(): RateSchema = copy()
 }
