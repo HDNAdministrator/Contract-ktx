@@ -19,7 +19,7 @@ data class Contract(
     @Expose val buyerDeputyId: String,
     @Expose val sellerId: String,
     @Expose val sellerDeputyId: String,
-    @Expose val witnessId: String,
+    @Expose val witnessId: String? = null,
     @Expose val buyerTimestamp: ZonedDateTime? = null,
     @Expose val buyerDeputyTimestamp: ZonedDateTime? = null,
     @Expose val sellerTimestamp: ZonedDateTime? = null,
