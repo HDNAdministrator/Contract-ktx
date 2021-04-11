@@ -12,14 +12,15 @@ import java.time.ZonedDateTime
 data class Recurrence(
     @Expose var start: ZonedDateTime,
     @Expose @MonthType var monthType: Int = MonthType.MONTHS,
-    @Expose @DaysType var daysType: Int = DaysType.DAYS
+    @Expose @DaysType var daysType: Int = DaysType.DAYS,
+    @Expose var finish: ZonedDateTime? = null
 ) : Parcelable {
 
     //region vars
-    @Expose var finish: ZonedDateTime? = null
+//    @Expose var finish: ZonedDateTime? = null
     @Expose @MonthsPeriod var monthsPeriod: Int? = null; set(value) { field = value;  this.monthType = MonthType.PERIOD; months?.clear()}
     @Expose @DaysPeriod var daysPeriod: Int? = null; set(value) { field = value; this.daysType = DaysType.PERIOD; this.days = null; this.dow = null }
-    @Expose private var months:MutableList<@Month Int>? = null
+    @Expose private var months: MutableList<@Month Int>? = null
     @Expose private var days: MutableList<@Day Int>? = null
     @Expose private var dow: MutableList<@DayOfWeek Int>? = null
     val isValid: Boolean; get() = validate()
@@ -91,9 +92,9 @@ data class Recurrence(
             DaysType.PERIOD -> daysPeriod == null
             else -> false
         } && when (monthsPeriod) {
-                    MonthType.MONTHS -> !months.isNullOrEmpty()
-                    MonthType.PERIOD -> monthsPeriod == null
-                    else -> false
+            MonthType.MONTHS -> !months.isNullOrEmpty()
+            MonthType.PERIOD -> monthsPeriod == null
+            else -> false
         } && (finish?.run { isAfter(start) } ?: true)
     }
 }

@@ -13,23 +13,23 @@ import java.time.ZonedDateTime
 
 @Parcelize
 data class Contract(
-    @Expose var tasks: MutableList<Task>,
-    @Expose var recurrence: Recurrence,
-    @Expose var buyerId: String,
-    @Expose var buyerDeputyId: String,
-    @Expose var sellerId: String,
-    @Expose var sellerDeputyId: String,
-    @Expose var witnessId: String,
-    @Expose var buyerTimestamp: ZonedDateTime,
-    @Expose var buyerDeputyTimestamp: ZonedDateTime,
-    @Expose var sellerTimestamp: ZonedDateTime,
-    @Expose var sellerDeputyTimestamp: ZonedDateTime,
-    @Expose var witnessTimestamp: ZonedDateTime,
-    @Expose var buyerSignature: ByteArray? = null,
-    @Expose var buyerDeputySignature: ByteArray? = null,
-    @Expose var sellerSignature: ByteArray? = null,
-    @Expose var sellerDeputySignature: ByteArray? = null,
-    @Expose var witnessSignature: ByteArray? = null
+    @Expose val tasks: MutableList<Task>,
+    @Expose val recurrence: Recurrence,
+    @Expose val buyerId: String,
+    @Expose val buyerDeputyId: String,
+    @Expose val sellerId: String,
+    @Expose val sellerDeputyId: String,
+    @Expose val witnessId: String,
+    @Expose val buyerTimestamp: ZonedDateTime? = null,
+    @Expose val buyerDeputyTimestamp: ZonedDateTime? = null,
+    @Expose val sellerTimestamp: ZonedDateTime? = null,
+    @Expose val sellerDeputyTimestamp: ZonedDateTime? = null,
+    @Expose val witnessTimestamp: ZonedDateTime? = null,
+    @Expose val buyerSignature: ByteArray? = null,
+    @Expose val buyerDeputySignature: ByteArray? = null,
+    @Expose val sellerSignature: ByteArray? = null,
+    @Expose val sellerDeputySignature: ByteArray? = null,
+    @Expose val witnessSignature: ByteArray? = null
 ) : Parcelable {
 
     @IgnoredOnParcel var uuid: String? = null
