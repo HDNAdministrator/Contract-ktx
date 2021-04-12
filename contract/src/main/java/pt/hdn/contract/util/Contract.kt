@@ -29,10 +29,9 @@ data class Contract(
     @Expose val buyerDeputySignature: ByteArray? = null,
     @Expose val sellerSignature: ByteArray? = null,
     @Expose val sellerDeputySignature: ByteArray? = null,
-    @Expose val witnessSignature: ByteArray? = null
+    @Expose val witnessSignature: ByteArray? = null,
+    @Expose val uuid: String? = null
 ) : Parcelable {
-
-    @IgnoredOnParcel var uuid: String? = null
 
     companion object {
         val gsonBuilder: GsonBuilder by lazy { GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter()).registerTypeAdapter(Schema::class.java, SchemaTypeAdapter()).registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter()) }
@@ -76,6 +75,7 @@ data class Contract(
             if (other.witnessSignature == null) return false
             if (!witnessSignature.contentEquals(other.witnessSignature)) return false
         } else if (other.witnessSignature != null) return false
+        if (uuid != other.uuid) return false
 
         return true
     }
@@ -87,17 +87,18 @@ data class Contract(
         result = 31 * result + buyerDeputyId.hashCode()
         result = 31 * result + sellerId.hashCode()
         result = 31 * result + sellerDeputyId.hashCode()
-        result = 31 * result + witnessId.hashCode()
-        result = 31 * result + buyerTimestamp.hashCode()
-        result = 31 * result + buyerDeputyTimestamp.hashCode()
-        result = 31 * result + sellerTimestamp.hashCode()
-        result = 31 * result + sellerDeputyTimestamp.hashCode()
-        result = 31 * result + witnessTimestamp.hashCode()
+        result = 31 * result + (witnessId?.hashCode() ?: 0)
+        result = 31 * result + (buyerTimestamp?.hashCode() ?: 0)
+        result = 31 * result + (buyerDeputyTimestamp?.hashCode() ?: 0)
+        result = 31 * result + (sellerTimestamp?.hashCode() ?: 0)
+        result = 31 * result + (sellerDeputyTimestamp?.hashCode() ?: 0)
+        result = 31 * result + (witnessTimestamp?.hashCode() ?: 0)
         result = 31 * result + (buyerSignature?.contentHashCode() ?: 0)
         result = 31 * result + (buyerDeputySignature?.contentHashCode() ?: 0)
         result = 31 * result + (sellerSignature?.contentHashCode() ?: 0)
         result = 31 * result + (sellerDeputySignature?.contentHashCode() ?: 0)
         result = 31 * result + (witnessSignature?.contentHashCode() ?: 0)
+        result = 31 * result + (uuid?.hashCode() ?: 0)
         return result
     }
 
