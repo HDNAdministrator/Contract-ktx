@@ -20,7 +20,7 @@ data class FixSchema(
 
     //region vars
     @IgnoredOnParcel @Expose @SourceType override var source: Int? = SourceType.NONE
-    @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.FIX
+    @IgnoredOnParcel @Expose @SchemaType override val type: Int = SchemaType.FIX
     @IgnoredOnParcel override val isValid: Boolean; get() = fix?.let { it > ZERO } == true
     //endregion vars
 

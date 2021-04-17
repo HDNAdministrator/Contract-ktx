@@ -1,7 +1,7 @@
 package pt.hdn.contract.adapters
 
 import com.google.gson.*
-import pt.hdn.contract.annotations.Parameter.Companion.ID
+import pt.hdn.contract.annotations.Parameter.Companion.TYPE
 import pt.hdn.contract.annotations.SchemaType.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType.Companion.RATE
 import pt.hdn.contract.annotations.SchemaType.Companion.COMMISSION
@@ -15,7 +15,7 @@ class SchemaTypeAdapter : JsonDeserializer<Schema> {
         return json
             ?.let {
                 with(it.asJsonObject) {
-                    when(this[ID].asInt) {
+                    when(this[TYPE].asInt) {
                         FIX -> FixSchema
                         RATE -> RateSchema
                         COMMISSION -> CommissionSchema

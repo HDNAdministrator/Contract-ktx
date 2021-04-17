@@ -8,7 +8,7 @@ import kotlin.annotation.AnnotationTarget.*
 @StringDef(Parameter.FIX, Parameter.RATE, Parameter.CUT, Parameter.BONUS, Parameter.SOURCE, Parameter.LOWER_BOUND, Parameter.UPPER_BOUND, Parameter.THRESHOLD, Parameter.IS_ABOVE)
 annotation class Parameter {
     companion object {
-       const val ID: String = "id"
+       const val TYPE: String = "type"
        const val FIX: String =  "fix"
        const val RATE: String =  "rate"
        const val CUT: String =  "cut"

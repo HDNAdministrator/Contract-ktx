@@ -26,7 +26,7 @@ data class ObjectiveSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
+    @IgnoredOnParcel @SchemaType @Expose override val type: Int = SchemaType.COMMISSION
     @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
     //endregion vars
 
