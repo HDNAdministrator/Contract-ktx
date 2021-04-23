@@ -26,12 +26,12 @@ data class CommissionSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @SchemaType @Expose override val type: Int = SchemaType.COMMISSION
+    @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
     @IgnoredOnParcel override val isValid: Boolean; get() = cut?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
     //endregion vars
 
     companion object : Parceler<CommissionSchema>, Deserializer<CommissionSchema> {
-        override fun CommissionSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(cut?.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(lowerBound?.toString()); writeString(upperBound?.toString()); writeInt(type) } }
+        override fun CommissionSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(cut?.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(lowerBound?.toString()); writeString(upperBound?.toString()); writeInt(id) } }
 
         override fun create(parcel: Parcel): CommissionSchema = with(parcel) { CommissionSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
 

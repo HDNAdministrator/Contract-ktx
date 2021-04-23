@@ -21,7 +21,7 @@ data class RateSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @Expose @SchemaType override val type: Int = SchemaType.RATE
+    @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.RATE
     @IgnoredOnParcel override val isValid: Boolean; get() = rate?.let { it > ZERO } == true && source != null
     //endregion vars
 
