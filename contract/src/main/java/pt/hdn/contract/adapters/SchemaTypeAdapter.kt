@@ -10,20 +10,20 @@ import pt.hdn.contract.annotations.SchemaType.Companion.THRESHOLD
 import pt.hdn.contract.schemas.*
 import java.lang.reflect.Type
 
-class SchemaTypeAdapter: /*JsonSerializer<Schema>, */JsonDeserializer<Schema> {
-//    override fun serialize(src: Schema?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement? {
-//        return src
-//                ?.run {
-//                    when (this) {
-//                        is FixSchema ->context?.serialize(this)
-//                        is RateSchema ->context?.serialize(this)
-//                        is CommissionSchema ->context?.serialize(this)
-//                        is ObjectiveSchema ->context?.serialize(this)
-//                        is ThresholdSchema ->context?.serialize(this)
-//                        else -> null
-//                    }
-//                }
-//    }
+class SchemaTypeAdapter: JsonSerializer<Schema?>, JsonDeserializer<Schema?> {
+    override fun serialize(src: Schema?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement? {
+        return src
+                ?.run {
+                    when (this) {
+                        is FixSchema ->context?.serialize(this)
+                        is RateSchema ->context?.serialize(this)
+                        is CommissionSchema ->context?.serialize(this)
+                        is ObjectiveSchema ->context?.serialize(this)
+                        is ThresholdSchema ->context?.serialize(this)
+                        else -> null
+                    }
+                }
+    }
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Schema? {
         return json?.asJsonObject
