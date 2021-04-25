@@ -34,7 +34,7 @@ data class ThresholdSchema(
 
         override fun create(parcel: Parcel): ThresholdSchema = with(parcel) { ThresholdSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), if (readInt() == 1) readInt() == 1 else null) }
 
-        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { ThresholdSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(THRESHOLD).asBigDecimal, get(IS_ABOVE).asBoolean) }
+        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { ThresholdSchema(this[BONUS].asBigDecimal, this[SOURCE].asInt, this[THRESHOLD].asBigDecimal, this[IS_ABOVE].asBoolean) }
     }
 
     override fun calculate(value: BigDecimal?): BigDecimal = bonus!!

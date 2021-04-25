@@ -35,7 +35,7 @@ data class ObjectiveSchema(
 
         override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) { ObjectiveSchema (readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
 
-        override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { ObjectiveSchema(get(BONUS).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND).asBigDecimal) }
+        override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { ObjectiveSchema(this[BONUS].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND].asBigDecimal) }
     }
 
     override fun calculate(value: BigDecimal?): BigDecimal = bonus!!

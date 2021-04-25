@@ -30,7 +30,7 @@ data class RateSchema(
 
         override fun create(parcel: Parcel): RateSchema = with(parcel) { RateSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null) }
 
-        override fun deserialize(json: JsonObject): RateSchema = with(json) { RateSchema(get(RATE).asBigDecimal, get(SOURCE).asInt) }
+        override fun deserialize(json: JsonObject): RateSchema = with(json) { RateSchema(this[RATE].asBigDecimal, this[SOURCE].asInt) }
     }
 
     override fun calculate(value: BigDecimal?): BigDecimal = (rate!! * value!!).setScale(2, HALF_EVEN)

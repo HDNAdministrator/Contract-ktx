@@ -35,7 +35,7 @@ data class CommissionSchema(
 
         override fun create(parcel: Parcel): CommissionSchema = with(parcel) { CommissionSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
 
-        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { CommissionSchema(get(CUT).asBigDecimal, get(SOURCE).asInt, get(LOWER_BOUND)?.asBigDecimal, get(UPPER_BOUND)?.asBigDecimal) }
+        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { CommissionSchema(this[CUT].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND]?.asBigDecimal) }
     }
 
     override fun calculate(value: BigDecimal?): BigDecimal = (cut!! * value!!).setScale(2, HALF_EVEN)
