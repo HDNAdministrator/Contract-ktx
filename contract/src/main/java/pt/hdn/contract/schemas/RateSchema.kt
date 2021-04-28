@@ -33,6 +33,22 @@ data class RateSchema(
         override fun deserialize(json: JsonObject): RateSchema = with(json) { RateSchema(this[RATE].asBigDecimal, this[SOURCE].asInt) }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is RateSchema) return false
+
+        if (rate != other.rate) return false
+        if (source != other.source) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = rate?.hashCode() ?: 0
+        result = 31 * result + (source ?: 0)
+        return result
+    }
+
     override fun calculate(value: BigDecimal?): BigDecimal = (rate!! * value!!).setScale(2, HALF_EVEN)
 
     override fun clone(): RateSchema = copy()

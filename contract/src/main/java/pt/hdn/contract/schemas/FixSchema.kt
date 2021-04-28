@@ -32,7 +32,22 @@ data class FixSchema(
         override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[FIX].asBigDecimal) }
     }
 
+
+
     override fun calculate(value: BigDecimal?): BigDecimal = fix!!
 
     override fun clone(): FixSchema = copy()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is FixSchema) return false
+
+        if (fix != other.fix) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return fix?.hashCode() ?: 0
+    }
 }

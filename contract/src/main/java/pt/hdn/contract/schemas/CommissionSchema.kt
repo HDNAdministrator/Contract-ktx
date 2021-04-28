@@ -38,6 +38,26 @@ data class CommissionSchema(
         override fun deserialize(json: JsonObject): CommissionSchema = with(json) { CommissionSchema(this[CUT].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND]?.asBigDecimal) }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CommissionSchema) return false
+
+        if (cut != other.cut) return false
+        if (source != other.source) return false
+        if (lowerBound != other.lowerBound) return false
+        if (upperBound != other.upperBound) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = cut?.hashCode() ?: 0
+        result = 31 * result + (source ?: 0)
+        result = 31 * result + (lowerBound?.hashCode() ?: 0)
+        result = 31 * result + (upperBound?.hashCode() ?: 0)
+        return result
+    }
+
     override fun calculate(value: BigDecimal?): BigDecimal = (cut!! * value!!).setScale(2, HALF_EVEN)
 
     override fun clone(): CommissionSchema = copy()

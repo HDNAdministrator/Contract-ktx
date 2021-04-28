@@ -38,6 +38,26 @@ data class ObjectiveSchema(
         override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { ObjectiveSchema(this[BONUS].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND].asBigDecimal) }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ObjectiveSchema) return false
+
+        if (bonus != other.bonus) return false
+        if (source != other.source) return false
+        if (lowerBound != other.lowerBound) return false
+        if (upperBound != other.upperBound) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = bonus?.hashCode() ?: 0
+        result = 31 * result + (source ?: 0)
+        result = 31 * result + (lowerBound?.hashCode() ?: 0)
+        result = 31 * result + (upperBound?.hashCode() ?: 0)
+        return result
+    }
+
     override fun calculate(value: BigDecimal?): BigDecimal = bonus!!
 
     override fun clone(): ObjectiveSchema = copy()
