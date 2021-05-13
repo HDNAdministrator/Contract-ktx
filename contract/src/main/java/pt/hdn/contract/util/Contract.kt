@@ -34,7 +34,12 @@ data class Contract(
 ) : Parcelable {
 
     companion object {
-        val gsonBuilder: GsonBuilder by lazy { GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter()).registerTypeAdapter(Schema::class.java, SchemaTypeAdapter()).registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter()) }
+        val gsonBuilder: GsonBuilder by lazy { GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter())
+            .registerTypeAdapter(Schema::class.java, SchemaTypeAdapter())
+            .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
+        }
 
         fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
     }

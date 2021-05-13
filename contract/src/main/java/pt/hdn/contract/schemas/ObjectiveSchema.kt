@@ -31,11 +31,33 @@ data class ObjectiveSchema(
     //endregion vars
 
     companion object : Parceler<ObjectiveSchema>, Deserializer<ObjectiveSchema> {
-        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(bonus.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(lowerBound?.toString()); writeString(upperBound?.toString()) } }
+        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) {
+            with(parcel) {
+                writeString(bonus.toString())
+                writeInt(if (source == null) 0 else 1)
+                source?.let { writeInt(it) }
+                writeString(lowerBound?.toString())
+                writeString(upperBound?.toString())
+            }
+        }
 
-        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) { ObjectiveSchema (readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
+        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) {
+            ObjectiveSchema (
+                bonus = readString()?.toBigDecimal(),
+                source = if (readInt() == 1) readInt() else null,
+                lowerBound = readString()?.toBigDecimal(),
+                upperBound = readString()?.toBigDecimal()
+            )
+        }
 
-        override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) { ObjectiveSchema(this[BONUS].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND].asBigDecimal) }
+        override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) {
+            ObjectiveSchema(
+                bonus = this[BONUS].asBigDecimal,
+                source = this[SOURCE].asInt,
+                lowerBound = this[LOWER_BOUND]?.asBigDecimal,
+                upperBound = this[UPPER_BOUND].asBigDecimal
+            )
+        }
     }
 
     override fun equals(other: Any?): Boolean {

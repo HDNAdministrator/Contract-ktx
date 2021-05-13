@@ -26,11 +26,27 @@ data class RateSchema(
     //endregion vars
 
     companion object : Parceler<RateSchema>, Deserializer<RateSchema> {
-        override fun RateSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(rate?.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) } } }
+        override fun RateSchema.write(parcel: Parcel, flags: Int) {
+            with(parcel) {
+                writeString(rate?.toString())
+                writeInt(if (source == null) 0 else 1)
+                source?.let { writeInt(it) }
+            }
+        }
 
-        override fun create(parcel: Parcel): RateSchema = with(parcel) { RateSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null) }
+        override fun create(parcel: Parcel): RateSchema = with(parcel) {
+            RateSchema(
+                rate = readString()?.toBigDecimal(),
+                source = if (readInt() == 1) readInt() else null
+            )
+        }
 
-        override fun deserialize(json: JsonObject): RateSchema = with(json) { RateSchema(this[RATE].asBigDecimal, this[SOURCE].asInt) }
+        override fun deserialize(json: JsonObject): RateSchema = with(json) {
+            RateSchema(
+                rate = this[RATE].asBigDecimal,
+                source = this[SOURCE].asInt
+            )
+        }
     }
 
     override fun equals(other: Any?): Boolean {

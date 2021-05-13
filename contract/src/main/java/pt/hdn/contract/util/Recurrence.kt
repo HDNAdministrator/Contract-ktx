@@ -20,9 +20,9 @@ data class Recurrence(
 //    @Expose var finish: ZonedDateTime? = null
     @Expose @MonthsPeriod var monthsPeriod: Int? = null; set(value) { field = value;  this.monthType = MonthType.PERIOD; months?.clear()}
     @Expose @DaysPeriod var daysPeriod: Int? = null; set(value) { field = value; this.daysType = DaysType.PERIOD; this.days = null; this.dow = null }
-    @Expose private var months: MutableList<@Month Int>? = null
-    @Expose private var days: MutableList<@Day Int>? = null
-    @Expose private var dow: MutableList<@DayOfWeek Int>? = null
+    @Expose private var months: MutableList<Int>? = null
+    @Expose private var days: MutableList<Int>? = null
+    @Expose private var dow: MutableList<Int>? = null
     val isValid: Boolean; get() = validate()
     //endregion vars
 
@@ -30,15 +30,15 @@ data class Recurrence(
         override fun create(parcel: Parcel): Recurrence {
             return with(parcel) {
                 Recurrence(
-                    ZonedDateTime.parse(readString()),
-                    readInt(),
-                    readInt(),
-                    readString()?.let { ZonedDateTime.parse(it) },
-                    readInt().let { if (it == 1) readInt() else null },
-                    readInt().let { if (it == 1) readInt() else null },
-                    readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-                    readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-                    readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null }
+                    start = ZonedDateTime.parse(readString()),
+                    monthType = readInt(),
+                    daysType = readInt(),
+                    finish = readString()?.let { ZonedDateTime.parse(it) },
+                    monthsPeriod = readInt().let { if (it == 1) readInt() else null },
+                    daysPeriod = readInt().let { if (it == 1) readInt() else null },
+                    months = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
+                    days = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
+                    dow = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null }
                 )
             }
         }
@@ -58,7 +58,7 @@ data class Recurrence(
         }
     }
 
-    private constructor(start: ZonedDateTime, @MonthType monthType: Int, @DaysType daysType: Int, finish: ZonedDateTime?, @MonthsPeriod monthsPeriod: Int?, @DaysPeriod daysPeriod: Int?, months: MutableList<@Month Int>?, days: MutableList<@Day Int>?, dow: MutableList<@DayOfWeek Int>?) : this(start, monthType, daysType) {
+    private constructor(start: ZonedDateTime, @MonthType monthType: Int, @DaysType daysType: Int, finish: ZonedDateTime?, @MonthsPeriod monthsPeriod: Int?, @DaysPeriod daysPeriod: Int?, months: MutableList<Int>?, days: MutableList<Int>?, dow: MutableList<Int>?) : this(start, monthType, daysType) {
         this.finish = finish
         this.monthsPeriod = monthsPeriod
         this.daysPeriod = daysPeriod
@@ -67,23 +67,70 @@ data class Recurrence(
         this.dow = dow
     }
 
-    fun removeMonth(@Month month: Int) { months?.remove(month)}
+    fun removeMonth(@Month month: Int) {
+        months?.remove(month)
+    }
 
     fun getMonths(): List<@Month Int>? = months
 
-    fun addMonth(@Month month: Int) { months?.apply { if (!contains(month)) { add(month); sort() } } ?: run { this.monthType = MonthType.MONTHS; this.months = mutableListOf(month); this.monthsPeriod = null } }
+    fun addMonth(@Month month: Int) {
+        months
+            ?.apply {
+                if (!contains(month)) {
+                    add(month)
 
-    fun removeDay(@Day day: Int) { days?.remove(day) }
+                    sort()
+                }
+            } ?: run {
+                this.monthType = MonthType.MONTHS
+                this.months = mutableListOf(month)
+                this.monthsPeriod = null
+            }
+    }
+
+    fun removeDay(@Day day: Int) {
+        days?.remove(day)
+    }
 
     fun getDays(): List<@Day Int>? = days
 
-    fun addDay(@Day day: Int) { days?.apply { if (!contains(day)) { add(day); sort() } } ?: run { this.daysType = DaysType.DAYS; this.days = mutableListOf(day); this.dow = null; this.daysPeriod = null } }
+    fun addDay(@Day day: Int) {
+        days
+            ?.apply {
+                if (!contains(day)) {
+                    add(day)
 
-    fun removeDow(@DayOfWeek dayOfWeek: Int) { dow?.remove(dayOfWeek) }
+                    sort()
+                }
+            } ?: run {
+                this.daysType = DaysType.DAYS
+                this.days = mutableListOf(day)
+                this.dow = null
+                this.daysPeriod = null
+            }
+    }
+
+    fun removeDow(@DayOfWeek dayOfWeek: Int) {
+        dow?.remove(dayOfWeek)
+    }
 
     fun getDow(): List<@DayOfWeek Int>? = dow
 
-    fun addDow(@DayOfWeek dayOfWeek: Int) { dow?.apply { if (!contains(dayOfWeek)) { add(dayOfWeek); sort() } } ?: run { this.daysType = DaysType.DOW; this.dow = mutableListOf(dayOfWeek); this.days = null; this.daysPeriod = null } }
+    fun addDow(@DayOfWeek dayOfWeek: Int) {
+        dow
+            ?.apply {
+                if (!contains(dayOfWeek)) {
+                    add(dayOfWeek)
+
+                    sort()
+                }
+            } ?: run {
+                this.daysType = DaysType.DOW
+                this.dow = mutableListOf(dayOfWeek)
+                this.days = null
+                this.daysPeriod = null
+            }
+    }
 
     private fun validate(): Boolean {
         return when (daysType) {
