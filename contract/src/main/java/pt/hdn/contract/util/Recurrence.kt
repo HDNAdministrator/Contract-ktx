@@ -18,8 +18,8 @@ data class Recurrence(
 
     //region vars
 //    @Expose var finish: ZonedDateTime? = null
-    @Expose @MonthsPeriod var monthsPeriod: Int? = null; set(value) { field = value;  this.monthType = MonthType.PERIOD; months?.clear()}
-    @Expose @DaysPeriod var daysPeriod: Int? = null; set(value) { field = value; this.daysType = DaysType.PERIOD; this.days = null; this.dow = null }
+    @Expose @MonthsPeriod var monthsPeriod: Int? = null
+    @Expose @DaysPeriod var daysPeriod: Int? = null
     @Expose private var months: MutableList<Int>? = null
     @Expose private var days: MutableList<Int>? = null
     @Expose private var dow: MutableList<Int>? = null
@@ -83,9 +83,15 @@ data class Recurrence(
                 }
             } ?: run {
                 this.monthType = MonthType.MONTHS
-                this.months = mutableListOf(month)
                 this.monthsPeriod = null
+                this.months = mutableListOf(month)
             }
+    }
+
+    fun setMonthPeriod(@MonthsPeriod monthsPeriod: Int) {
+        this.monthType = MonthType.PERIOD
+        this.monthsPeriod = monthsPeriod
+        this.months = null
     }
 
     fun removeDay(@Day day: Int) {
@@ -108,6 +114,13 @@ data class Recurrence(
                 this.dow = null
                 this.daysPeriod = null
             }
+    }
+
+    fun setDaysPeriod(@DaysPeriod daysPeriod: Int) {
+        this.daysType = DaysType.PERIOD
+        this.days = null
+        this.dow = null
+        this.daysPeriod = daysPeriod
     }
 
     fun removeDow(@DayOfWeek dayOfWeek: Int) {

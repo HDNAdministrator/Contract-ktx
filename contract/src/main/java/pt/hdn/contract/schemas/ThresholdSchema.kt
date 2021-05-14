@@ -30,11 +30,35 @@ data class ThresholdSchema(
     //endregion vars
 
     companion object : Parceler<ThresholdSchema>, Deserializer<ThresholdSchema> {
-        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(bonus?.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(threshold?.toString()); writeInt(if (isAbove == null) 0 else 1); isAbove?.let { writeInt(if (it) 1 else 0) } } }
+        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) {
+            with(parcel) {
+                writeString(bonus?.toString())
+                writeInt(if (source == null) 0 else 1)
+                source?.let { writeInt(it) }
+                writeString(threshold?.toString())
+                writeInt(if (isAbove == null) 0 else 1)
+                isAbove?.let { writeInt(if (it) 1 else 0)
+                }
+            }
+        }
 
-        override fun create(parcel: Parcel): ThresholdSchema = with(parcel) { ThresholdSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), if (readInt() == 1) readInt() == 1 else null) }
+        override fun create(parcel: Parcel): ThresholdSchema = with(parcel) {
+            ThresholdSchema(
+                bonus = readString()?.toBigDecimal(),
+                source = if (readInt() == 1) readInt() else null,
+                threshold = readString()?.toBigDecimal(),
+                isAbove = if (readInt() == 1) readInt() == 1 else null
+            )
+        }
 
-        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) { ThresholdSchema(this[BONUS].asBigDecimal, this[SOURCE].asInt, this[THRESHOLD].asBigDecimal, this[IS_ABOVE].asBoolean) }
+        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) {
+            ThresholdSchema(
+                bonus = this[BONUS].asBigDecimal,
+                source = this[SOURCE].asInt,
+                threshold = this[THRESHOLD].asBigDecimal,
+                isAbove = this[IS_ABOVE].asBoolean
+            )
+        }
     }
 
     override fun equals(other: Any?): Boolean {

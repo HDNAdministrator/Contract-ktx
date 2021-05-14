@@ -25,11 +25,23 @@ data class FixSchema(
     //endregion vars
 
     companion object : Parceler<FixSchema>, Deserializer<FixSchema> {
-        override fun FixSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(fix?.toString()) } }
+        override fun FixSchema.write(parcel: Parcel, flags: Int) {
+            with(parcel) {
+                writeString(fix?.toString())
+            }
+        }
 
-        override fun create(parcel: Parcel): FixSchema = with(parcel) { FixSchema(readString()?.toBigDecimal()) }
+        override fun create(parcel: Parcel): FixSchema = with(parcel) {
+            FixSchema(
+                fix = readString()?.toBigDecimal()
+            )
+        }
 
-        override fun deserialize(json: JsonObject): FixSchema = with(json) { FixSchema(this[FIX].asBigDecimal) }
+        override fun deserialize(json: JsonObject): FixSchema = with(json) {
+            FixSchema(
+                fix = this[FIX].asBigDecimal
+            )
+        }
     }
 
 
