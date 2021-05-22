@@ -13,59 +13,58 @@ data class Recurrence(
     @Expose var start: ZonedDateTime,
     @Expose @MonthType var monthType: Int = MonthType.MONTHS,
     @Expose @DaysType var daysType: Int = DaysType.DAYS,
-    @Expose var finish: ZonedDateTime? = null
+    @Expose var finish: ZonedDateTime? = null,
+    @Expose @MonthsPeriod var monthsPeriod: Int? = null,
+    @Expose @DaysPeriod var daysPeriod: Int? = null,
+    @Expose private var months: MutableList<Int>? = null,
+    @Expose private var days: MutableList<Int>? = null,
+    @Expose private var dow: MutableList<Int>? = null
 ) : Parcelable {
 
     //region vars
-//    @Expose var finish: ZonedDateTime? = null
-    @Expose @MonthsPeriod var monthsPeriod: Int? = null
-    @Expose @DaysPeriod var daysPeriod: Int? = null
-    @Expose private var months: MutableList<Int>? = null
-    @Expose private var days: MutableList<Int>? = null
-    @Expose private var dow: MutableList<Int>? = null
     val isValid: Boolean; get() = validate()
     //endregion vars
 
-    companion object : Parceler<Recurrence> {
-        override fun create(parcel: Parcel): Recurrence {
-            return with(parcel) {
-                Recurrence(
-                    start = ZonedDateTime.parse(readString()),
-                    monthType = readInt(),
-                    daysType = readInt(),
-                    finish = readString()?.let { ZonedDateTime.parse(it) },
-                    monthsPeriod = readInt().let { if (it == 1) readInt() else null },
-                    daysPeriod = readInt().let { if (it == 1) readInt() else null },
-                    months = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-                    days = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-                    dow = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null }
-                )
-            }
-        }
+//    companion object : Parceler<Recurrence> {
+//        override fun create(parcel: Parcel): Recurrence {
+//            return with(parcel) {
+//                Recurrence(
+//                    start = ZonedDateTime.parse(readString()),
+//                    monthType = readInt(),
+//                    daysType = readInt(),
+//                    finish = readString()?.let { ZonedDateTime.parse(it) },
+//                    monthsPeriod = readInt().let { if (it == 1) readInt() else null },
+//                    daysPeriod = readInt().let { if (it == 1) readInt() else null },
+//                    months = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
+//                    days = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
+//                    dow = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null }
+//                )
+//            }
+//        }
+//
+//        override fun Recurrence.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(start.toString())
+//                writeInt(monthType)
+//                writeInt(daysType)
+//                writeString(finish?.toString())
+//                monthsPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
+//                daysPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
+//                months?.run { writeInt(1); writeList(this) } ?: writeInt(0)
+//                days?.run { writeInt(1); writeList(this) } ?: writeInt(0)
+//                dow?.run { writeInt(1); writeList(this) } ?: writeInt(0)
+//            }
+//        }
+//    }
 
-        override fun Recurrence.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(start.toString())
-                writeInt(monthType)
-                writeInt(daysType)
-                writeString(finish?.toString())
-                monthsPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
-                daysPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
-                months?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-                days?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-                dow?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-            }
-        }
-    }
-
-    private constructor(start: ZonedDateTime, @MonthType monthType: Int, @DaysType daysType: Int, finish: ZonedDateTime?, @MonthsPeriod monthsPeriod: Int?, @DaysPeriod daysPeriod: Int?, months: MutableList<Int>?, days: MutableList<Int>?, dow: MutableList<Int>?) : this(start, monthType, daysType) {
-        this.finish = finish
-        this.monthsPeriod = monthsPeriod
-        this.daysPeriod = daysPeriod
-        this.months = months
-        this.days = days
-        this.dow = dow
-    }
+//    private constructor(start: ZonedDateTime, @MonthType monthType: Int, @DaysType daysType: Int, finish: ZonedDateTime?, @MonthsPeriod monthsPeriod: Int?, @DaysPeriod daysPeriod: Int?, months: MutableList<Int>?, days: MutableList<Int>?, dow: MutableList<Int>?) : this(start, monthType, daysType) {
+//        this.finish = finish
+//        this.monthsPeriod = monthsPeriod
+//        this.daysPeriod = daysPeriod
+//        this.months = months
+//        this.days = days
+//        this.dow = dow
+//    }
 
     fun removeMonth(@Month month: Int) {
         months?.remove(month)

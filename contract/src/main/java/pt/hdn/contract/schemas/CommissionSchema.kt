@@ -31,11 +31,33 @@ data class CommissionSchema(
     //endregion vars
 
     companion object : Parceler<CommissionSchema>, Deserializer<CommissionSchema> {
-        override fun CommissionSchema.write(parcel: Parcel, flags: Int) { with(parcel) { writeString(cut?.toString()); writeInt(if (source == null) 0 else 1); source?.let { writeInt(it) }; writeString(lowerBound?.toString()); writeString(upperBound?.toString()); writeInt(id) } }
+        override fun CommissionSchema.write(parcel: Parcel, flags: Int) {
+            with(parcel) {
+                writeString(cut?.toString())
+                writeInt(if (source == null) 0 else 1)
+                source?.let { writeInt(it) }
+                writeString(lowerBound?.toString())
+                writeString(upperBound?.toString())
+            }
+        }
 
-        override fun create(parcel: Parcel): CommissionSchema = with(parcel) { CommissionSchema(readString()?.toBigDecimal(), if (readInt() == 1) readInt() else null, readString()?.toBigDecimal(), readString()?.toBigDecimal()) }
+        override fun create(parcel: Parcel): CommissionSchema = with(parcel) {
+            CommissionSchema(
+                cut = readString()?.toBigDecimal(),
+                source = if (readInt() == 1) readInt() else null,
+                lowerBound = readString()?.toBigDecimal(),
+                upperBound = readString()?.toBigDecimal()
+            )
+        }
 
-        override fun deserialize(json: JsonObject): CommissionSchema = with(json) { CommissionSchema(this[CUT].asBigDecimal, this[SOURCE].asInt, this[LOWER_BOUND]?.asBigDecimal, this[UPPER_BOUND]?.asBigDecimal) }
+        override fun deserialize(json: JsonObject): CommissionSchema = with(json) {
+            CommissionSchema(
+                cut = this[CUT].asBigDecimal,
+                source = this[SOURCE].asInt,
+                lowerBound = this[LOWER_BOUND]?.asBigDecimal,
+                upperBound = this[UPPER_BOUND]?.asBigDecimal
+            )
+        }
     }
 
     override fun equals(other: Any?): Boolean {
