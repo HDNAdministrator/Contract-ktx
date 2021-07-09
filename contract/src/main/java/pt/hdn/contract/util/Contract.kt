@@ -3,7 +3,6 @@ package pt.hdn.contract.util
 import android.os.Parcelable
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.adapters.ByteArrayTypeAdapter
 import pt.hdn.contract.adapters.SchemaTypeAdapter
@@ -32,6 +31,11 @@ data class Contract(
     @Expose val witnessSignature: ByteArray? = null,
     @Expose val uuid: String? = null
 ) : Parcelable {
+
+    //region vars
+    val hasBuyerSigned: Boolean; get() = buyerSignature != null && buyerDeputySignature != null
+    val hasSellerSigned: Boolean; get() = sellerSignature != null && sellerDeputySignature != null
+    //endregion vars
 
     companion object {
         val gsonBuilder: GsonBuilder by lazy { GsonBuilder()

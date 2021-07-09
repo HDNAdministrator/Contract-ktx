@@ -1,9 +1,7 @@
 package pt.hdn.contract.util
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.*
 import java.time.ZonedDateTime
