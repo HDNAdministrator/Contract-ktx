@@ -11,7 +11,6 @@ import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
-import java.math.RoundingMode
 
 @Parcelize
 data class FixSchema(
@@ -24,18 +23,18 @@ data class FixSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = fix?.let { it > ZERO } == true
     //endregion vars
 
-    companion object : Parceler<FixSchema>, Deserializer<FixSchema> {
-        override fun FixSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(fix?.toString())
-            }
-        }
-
-        override fun create(parcel: Parcel): FixSchema = with(parcel) {
-            FixSchema(
-                fix = readString()?.toBigDecimal()
-            )
-        }
+    companion object : /*Parceler<FixSchema>, */Deserializer<FixSchema> {
+//        override fun FixSchema.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(fix?.toString())
+//            }
+//        }
+//
+//        override fun create(parcel: Parcel): FixSchema = with(parcel) {
+//            FixSchema(
+//                fix = readString()?.toBigDecimal()
+//            )
+//        }
 
         override fun deserialize(json: JsonObject): FixSchema = with(json) {
             FixSchema(
@@ -43,9 +42,7 @@ data class FixSchema(
             )
         }
     }
-
-
-
+    
     override fun calculate(value: BigDecimal?): BigDecimal = fix!!
 
     override fun clone(): FixSchema = copy()

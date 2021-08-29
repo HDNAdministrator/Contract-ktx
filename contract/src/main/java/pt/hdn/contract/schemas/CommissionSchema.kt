@@ -30,25 +30,25 @@ data class CommissionSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = cut?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
     //endregion vars
 
-    companion object : Parceler<CommissionSchema>, Deserializer<CommissionSchema> {
-        override fun CommissionSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(cut?.toString())
-                writeInt(if (source == null) 0 else 1)
-                source?.let { writeInt(it) }
-                writeString(lowerBound?.toString())
-                writeString(upperBound?.toString())
-            }
-        }
-
-        override fun create(parcel: Parcel): CommissionSchema = with(parcel) {
-            CommissionSchema(
-                cut = readString()?.toBigDecimal(),
-                source = if (readInt() == 1) readInt() else null,
-                lowerBound = readString()?.toBigDecimal(),
-                upperBound = readString()?.toBigDecimal()
-            )
-        }
+    companion object : /*Parceler<CommissionSchema>, */Deserializer<CommissionSchema> {
+//        override fun CommissionSchema.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(cut?.toString())
+//                writeInt(if (source == null) 0 else 1)
+//                source?.let { writeInt(it) }
+//                writeString(lowerBound?.toString())
+//                writeString(upperBound?.toString())
+//            }
+//        }
+//
+//        override fun create(parcel: Parcel): CommissionSchema = with(parcel) {
+//            CommissionSchema(
+//                cut = readString()?.toBigDecimal(),
+//                source = if (readInt() == 1) readInt() else null,
+//                lowerBound = readString()?.toBigDecimal(),
+//                upperBound = readString()?.toBigDecimal()
+//            )
+//        }
 
         override fun deserialize(json: JsonObject): CommissionSchema = with(json) {
             CommissionSchema(

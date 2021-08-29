@@ -29,27 +29,27 @@ data class ThresholdSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && threshold?.let { it > ZERO } == true && isAbove != null
     //endregion vars
 
-    companion object : Parceler<ThresholdSchema>, Deserializer<ThresholdSchema> {
-        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(bonus?.toString())
-                writeInt(if (source == null) 0 else 1)
-                source?.let { writeInt(it) }
-                writeString(threshold?.toString())
-                writeInt(if (isAbove == null) 0 else 1)
-                isAbove?.let { writeInt(if (it) 1 else 0)
-                }
-            }
-        }
-
-        override fun create(parcel: Parcel): ThresholdSchema = with(parcel) {
-            ThresholdSchema(
-                bonus = readString()?.toBigDecimal(),
-                source = if (readInt() == 1) readInt() else null,
-                threshold = readString()?.toBigDecimal(),
-                isAbove = if (readInt() == 1) readInt() == 1 else null
-            )
-        }
+    companion object : /*Parceler<ThresholdSchema>, */Deserializer<ThresholdSchema> {
+//        override fun ThresholdSchema.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(bonus?.toString())
+//                writeInt(if (source == null) 0 else 1)
+//                source?.let { writeInt(it) }
+//                writeString(threshold?.toString())
+//                writeInt(if (isAbove == null) 0 else 1)
+//                isAbove?.let { writeInt(if (it) 1 else 0)
+//                }
+//            }
+//        }
+//
+//        override fun create(parcel: Parcel): ThresholdSchema = with(parcel) {
+//            ThresholdSchema(
+//                bonus = readString()?.toBigDecimal(),
+//                source = if (readInt() == 1) readInt() else null,
+//                threshold = readString()?.toBigDecimal(),
+//                isAbove = if (readInt() == 1) readInt() == 1 else null
+//            )
+//        }
 
         override fun deserialize(json: JsonObject): ThresholdSchema = with(json) {
             ThresholdSchema(

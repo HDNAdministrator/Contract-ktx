@@ -30,25 +30,25 @@ data class ObjectiveSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
     //endregion vars
 
-    companion object : Parceler<ObjectiveSchema>, Deserializer<ObjectiveSchema> {
-        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(bonus.toString())
-                writeInt(if (source == null) 0 else 1)
-                source?.let { writeInt(it) }
-                writeString(lowerBound?.toString())
-                writeString(upperBound?.toString())
-            }
-        }
-
-        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) {
-            ObjectiveSchema (
-                bonus = readString()?.toBigDecimal(),
-                source = if (readInt() == 1) readInt() else null,
-                lowerBound = readString()?.toBigDecimal(),
-                upperBound = readString()?.toBigDecimal()
-            )
-        }
+    companion object : /*Parceler<ObjectiveSchema>, */Deserializer<ObjectiveSchema> {
+//        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(bonus.toString())
+//                writeInt(if (source == null) 0 else 1)
+//                source?.let { writeInt(it) }
+//                writeString(lowerBound?.toString())
+//                writeString(upperBound?.toString())
+//            }
+//        }
+//
+//        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) {
+//            ObjectiveSchema (
+//                bonus = readString()?.toBigDecimal(),
+//                source = if (readInt() == 1) readInt() else null,
+//                lowerBound = readString()?.toBigDecimal(),
+//                upperBound = readString()?.toBigDecimal()
+//            )
+//        }
 
         override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) {
             ObjectiveSchema(

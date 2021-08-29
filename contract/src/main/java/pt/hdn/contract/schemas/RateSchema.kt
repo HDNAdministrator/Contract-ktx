@@ -25,21 +25,21 @@ data class RateSchema(
     @IgnoredOnParcel override val isValid: Boolean; get() = rate?.let { it > ZERO } == true && source != null
     //endregion vars
 
-    companion object : Parceler<RateSchema>, Deserializer<RateSchema> {
-        override fun RateSchema.write(parcel: Parcel, flags: Int) {
-            with(parcel) {
-                writeString(rate?.toString())
-                writeInt(if (source == null) 0 else 1)
-                source?.let { writeInt(it) }
-            }
-        }
-
-        override fun create(parcel: Parcel): RateSchema = with(parcel) {
-            RateSchema(
-                rate = readString()?.toBigDecimal(),
-                source = if (readInt() == 1) readInt() else null
-            )
-        }
+    companion object : /*Parceler<RateSchema>, */Deserializer<RateSchema> {
+//        override fun RateSchema.write(parcel: Parcel, flags: Int) {
+//            with(parcel) {
+//                writeString(rate?.toString())
+//                writeInt(if (source == null) 0 else 1)
+//                source?.let { writeInt(it) }
+//            }
+//        }
+//
+//        override fun create(parcel: Parcel): RateSchema = with(parcel) {
+//            RateSchema(
+//                rate = readString()?.toBigDecimal(),
+//                source = if (readInt() == 1) readInt() else null
+//            )
+//        }
 
         override fun deserialize(json: JsonObject): RateSchema = with(json) {
             RateSchema(

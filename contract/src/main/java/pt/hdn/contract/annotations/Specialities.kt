@@ -7,6 +7,7 @@ import kotlin.annotation.AnnotationRetention.SOURCE
 @IntDef()
 annotation class Specialities {
     companion object {
+        const val DRIVER: Int = 3
         const val CEO: Int = 19
     }
 }
