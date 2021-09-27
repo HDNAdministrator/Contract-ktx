@@ -12,9 +12,16 @@ data class Task(
     @Expose var schemas: MutableList<@RawValue Schema> = mutableListOf(),
     @Expose var responsibilities: List<IdNameData>? = null,
     @Expose var exclusivity: Boolean? = null
-    ) : Parcelable {
+    ) : Parcelable, Cloneable {
 
     //region vars
     val isValid: Boolean; get() = with(schemas) { isNotEmpty() && all { isValid } } && responsibilities?.isNotEmpty() ?: true
     //endregion vars
+
+    public override fun clone(): Task {
+        return copy(
+            schemas = schemas.mapTo(mutableListOf()) { it.clone() },
+            responsibilities = responsibilities?.mapTo(mutableListOf()) { it }
+        )
+    }
 }

@@ -30,7 +30,7 @@ data class Contract(
     @Expose val sellerDeputySignature: ByteArray? = null,
     @Expose val witnessSignature: ByteArray? = null,
     @Expose val uuid: String? = null
-) : Parcelable {
+) : Parcelable, Cloneable {
 
     //region vars
     val hasBuyerSigned: Boolean; get() = buyerSignature != null && buyerDeputySignature != null
@@ -46,6 +46,29 @@ data class Contract(
         }
 
         fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
+    }
+
+    override fun clone(): Contract {
+        return copy(
+            tasks = tasks.mapTo(mutableListOf()) { it.clone() },
+            recurrence = recurrence.copy(),
+            buyerId = buyerId,
+            buyerDeputyId = buyerDeputyId,
+            sellerId = sellerId,
+            sellerDeputyId = sellerDeputyId,
+            witnessId = witnessId,
+            buyerTimestamp = null,
+            buyerDeputyTimestamp = null,
+            sellerTimestamp = null,
+            sellerDeputyTimestamp = null,
+            witnessTimestamp = null,
+            buyerSignature = null,
+            buyerDeputySignature = null,
+            sellerSignature = null,
+            sellerDeputySignature = null,
+            witnessSignature = null,
+            uuid = null
+        )
     }
 
     override fun equals(other: Any?): Boolean {
