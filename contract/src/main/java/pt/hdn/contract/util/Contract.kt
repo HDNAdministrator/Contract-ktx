@@ -48,7 +48,7 @@ data class Contract(
         fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
     }
 
-    override fun clone(): Contract {
+    public override fun clone(): Contract {
         return copy(
             tasks = tasks.mapTo(mutableListOf()) { it.clone() },
             recurrence = recurrence.copy(),
@@ -133,6 +133,4 @@ data class Contract(
         result = 31 * result + (uuid?.hashCode() ?: 0)
         return result
     }
-
-    fun toJson(): String = gsonBuilder.create().toJson(this)
 }
