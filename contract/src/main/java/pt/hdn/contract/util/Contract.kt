@@ -133,4 +133,6 @@ data class Contract(
         result = 31 * result + (uuid?.hashCode() ?: 0)
         return result
     }
+
+    fun toJson(): String = gsonBuilder.create().toJson(this)
 }
