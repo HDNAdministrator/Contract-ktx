@@ -2,6 +2,29 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'maven-publish'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'pt.hdn.contract'
+                artifactId = 'contract'
+                version = 'a.2.2'
+            }
+
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'pt.hdn.contract'
+                artifactId = 'contract'
+                version = 'a.2.2'
+            }
+        }
+    }
 }
 
 android {
@@ -12,7 +35,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 31
         versionCode 1
-        versionName "a.0.0"
+        versionName "a.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,7 +54,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = "11"
     }
 }
 
