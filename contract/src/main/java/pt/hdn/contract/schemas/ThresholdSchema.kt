@@ -68,7 +68,7 @@ data class ThresholdSchema(
         return when {
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
-            threshold?.let { it <= ZERO } == true -> Err.THRESHOLD
+            threshold?.let { it <= ZERO } != false -> Err.THRESHOLD
             isAbove == null -> Err.IS_ABOVE
             else -> Err.NONE
         }

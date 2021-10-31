@@ -67,9 +67,9 @@ data class ObjectiveSchema(
         return when {
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
-            lowerBound?.let { it < ZERO } != false -> Err.LOWER_BOUND
-            upperBound?.let { it > ONE } != false -> Err.UPPER_BOUND
-            lowerBound!! >= upperBound -> Err.REVERSED_BOUNDS
+            lowerBound?.let { it < ZERO } == true -> Err.LOWER_BOUND
+            upperBound?.let { it < ZERO } == true -> Err.UPPER_BOUND
+            lowerBound?.let { lb -> upperBound?.let { ub -> ub <= lb } } == true -> Err.REVERSED_BOUNDS
             else -> Err.NONE
         }
     }
