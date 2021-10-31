@@ -1,11 +1,10 @@
 package pt.hdn.contract.schemas
 
-import android.os.Parcel
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
+import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.annotations.Parameter.Companion.CUT
 import pt.hdn.contract.annotations.Parameter.Companion.LOWER_BOUND
 import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
@@ -27,30 +26,10 @@ data class CommissionSchema(
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
-    @IgnoredOnParcel override val isValid: Boolean; get() = cut?.let { it > ZERO } ?: true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> lb < ub } ?: true } ?: true
-//    @IgnoredOnParcel override val isValid: Boolean; get() = cut?.let { it > ZERO } == true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> ub <= ONE && lb < ub } == true } == true
+    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
-    companion object : /*Parceler<CommissionSchema>, */Deserializer<CommissionSchema> {
-//        override fun CommissionSchema.write(parcel: Parcel, flags: Int) {
-//            with(parcel) {
-//                writeString(cut?.toString())
-//                writeInt(if (source == null) 0 else 1)
-//                source?.let { writeInt(it) }
-//                writeString(lowerBound?.toString())
-//                writeString(upperBound?.toString())
-//            }
-//        }
-//
-//        override fun create(parcel: Parcel): CommissionSchema = with(parcel) {
-//            CommissionSchema(
-//                cut = readString()?.toBigDecimal(),
-//                source = if (readInt() == 1) readInt() else null,
-//                lowerBound = readString()?.toBigDecimal(),
-//                upperBound = readString()?.toBigDecimal()
-//            )
-//        }
-
+    companion object : Deserializer<CommissionSchema> {
         override fun deserialize(json: JsonObject): CommissionSchema = with(json) {
             CommissionSchema(
                 cut = this[CUT].asBigDecimal,
@@ -84,4 +63,15 @@ data class CommissionSchema(
     override fun calculate(value: BigDecimal?): BigDecimal = (cut!! * value!!).setScale(2, HALF_EVEN)
 
     override fun clone(): CommissionSchema = copy()
+
+    @Err private fun validate(): Int {
+        return when {
+            cut?.let { it <= ZERO } != false -> Err.CUT
+            source == null -> Err.SOURCE
+            lowerBound?.let { it < ZERO } != false -> Err.LOWER_BOUND
+            upperBound?.let { it > ONE } != false -> Err.UPPER_BOUND
+            lowerBound!! >= upperBound -> Err.REVERSED_BOUNDS
+            else -> Err.NONE
+        }
+    }
 }

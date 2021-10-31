@@ -20,7 +20,7 @@ data class Recurrence(
 ) : Parcelable {
 
     //region vars
-    val isValid: Boolean; get() = validate()
+    @Err val isValid: Int; get() = validate()
     //endregion vars
 
 //    companion object : Parceler<Recurrence> {
@@ -142,16 +142,15 @@ data class Recurrence(
             }
     }
 
-    private fun validate(): Boolean {
-        return when (daysType) {
-            DaysType.DAYS -> !days.isNullOrEmpty()
-            DaysType.DOW -> !dow.isNullOrEmpty()
-            DaysType.PERIOD -> daysPeriod == null
-            else -> false
-        } && when (monthsPeriod) {
-            MonthType.MONTHS -> !months.isNullOrEmpty()
-            MonthType.PERIOD -> monthsPeriod == null
-            else -> false
-        } && (finish?.run { isAfter(start) } ?: true)
+    @Err private fun validate(): Int {
+        return when {
+            daysType == DaysType.DAYS && days.isNullOrEmpty()-> Err.DAYS
+            daysType == DaysType.DOW && dow.isNullOrEmpty() -> Err.DOW
+            daysType == DaysType.PERIOD && daysPeriod == null -> Err.DAYS_PERIOD
+            monthsPeriod == MonthType.MONTHS && months.isNullOrEmpty() -> Err.MONTHS
+            monthsPeriod == MonthType.MONTHS && monthsPeriod == null -> Err.MONTHS_PERIOD
+            finish?.run { isBefore(start) } ?: false -> Err.FINISH
+            else -> Err.NONE
+        }
     }
 }

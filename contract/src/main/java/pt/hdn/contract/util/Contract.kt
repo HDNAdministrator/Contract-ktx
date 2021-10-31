@@ -3,10 +3,12 @@ package pt.hdn.contract.util
 import android.os.Parcelable
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.adapters.ByteArrayTypeAdapter
 import pt.hdn.contract.adapters.SchemaTypeAdapter
 import pt.hdn.contract.adapters.ZonedDateTimeTypeAdapter
+import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.schemas.Schema
 import java.time.ZonedDateTime
 
@@ -33,8 +35,9 @@ data class Contract(
 ) : Parcelable, Cloneable {
 
     //region vars
-    val hasBuyerSigned: Boolean; get() = buyerSignature != null && buyerDeputySignature != null
-    val hasSellerSigned: Boolean; get() = sellerSignature != null && sellerDeputySignature != null
+    @IgnoredOnParcel val hasBuyerSigned: Boolean; get() = buyerSignature != null && buyerDeputySignature != null
+    @IgnoredOnParcel val hasSellerSigned: Boolean; get() = sellerSignature != null && sellerDeputySignature != null
+    @IgnoredOnParcel @Err val isValid: Int get() = validate()
     //endregion vars
 
     companion object {
@@ -135,4 +138,14 @@ data class Contract(
     }
 
     fun toJson(): String = gsonBuilder.create().toJson(this)
+
+    @Err private fun validate(): Int {
+        var err = Err.NONE
+
+        return when {
+            tasks.isEmpty() -> Err.TASKS
+            tasks.all { it.isValid.let { err = it; it != Err.NONE } } || recurrence.isValid.let { err = it; it != Err.NONE } -> err
+            else -> Err.NONE
+        }
+    }
 }

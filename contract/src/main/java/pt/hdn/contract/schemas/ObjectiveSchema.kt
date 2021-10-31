@@ -1,11 +1,10 @@
 package pt.hdn.contract.schemas
 
-import android.os.Parcel
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
+import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.annotations.Parameter.Companion.BONUS
 import pt.hdn.contract.annotations.Parameter.Companion.LOWER_BOUND
 import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
@@ -15,7 +14,6 @@ import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
 import java.math.BigDecimal.ONE
 import java.math.BigDecimal.ZERO
-import java.math.RoundingMode
 
 @Parcelize
 data class ObjectiveSchema(
@@ -27,29 +25,10 @@ data class ObjectiveSchema(
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.OBJECTIVE
-    @IgnoredOnParcel override val isValid: Boolean; get() = bonus?.let { it > ZERO } ?: true && lowerBound?.let { lb -> lb >= ZERO && upperBound?.let { ub -> lb < ub } ?: true } ?: true
+    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
-    companion object : /*Parceler<ObjectiveSchema>, */Deserializer<ObjectiveSchema> {
-//        override fun ObjectiveSchema.write(parcel: Parcel, flags: Int) {
-//            with(parcel) {
-//                writeString(bonus.toString())
-//                writeInt(if (source == null) 0 else 1)
-//                source?.let { writeInt(it) }
-//                writeString(lowerBound?.toString())
-//                writeString(upperBound?.toString())
-//            }
-//        }
-//
-//        override fun create(parcel: Parcel): ObjectiveSchema = with(parcel) {
-//            ObjectiveSchema (
-//                bonus = readString()?.toBigDecimal(),
-//                source = if (readInt() == 1) readInt() else null,
-//                lowerBound = readString()?.toBigDecimal(),
-//                upperBound = readString()?.toBigDecimal()
-//            )
-//        }
-
+    companion object : Deserializer<ObjectiveSchema> {
         override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) {
             ObjectiveSchema(
                 bonus = this[BONUS].asBigDecimal,
@@ -83,4 +62,15 @@ data class ObjectiveSchema(
     override fun calculate(value: BigDecimal?): BigDecimal = bonus!!
 
     override fun clone(): ObjectiveSchema = copy()
+
+    @Err private fun validate(): Int {
+        return when {
+            bonus?.let { it <= ZERO } != false -> Err.BONUS
+            source == null -> Err.SOURCE
+            lowerBound?.let { it < ZERO } != false -> Err.LOWER_BOUND
+            upperBound?.let { it > ONE } != false -> Err.UPPER_BOUND
+            lowerBound!! >= upperBound -> Err.REVERSED_BOUNDS
+            else -> Err.NONE
+        }
+    }
 }

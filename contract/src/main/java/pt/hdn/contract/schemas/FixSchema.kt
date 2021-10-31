@@ -1,11 +1,10 @@
 package pt.hdn.contract.schemas
 
-import android.os.Parcel
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
+import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.annotations.Parameter.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
@@ -20,22 +19,10 @@ data class FixSchema(
     //region vars
     @IgnoredOnParcel @Expose @SourceType override var source: Int? = SourceType.NONE
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.FIX
-    @IgnoredOnParcel override val isValid: Boolean; get() = fix?.let { it > ZERO } == true
+    @IgnoredOnParcel @Err override val isValid: Int; get() = if (fix?.let { it == ZERO } != false) Err.FIX else Err.NONE
     //endregion vars
 
-    companion object : /*Parceler<FixSchema>, */Deserializer<FixSchema> {
-//        override fun FixSchema.write(parcel: Parcel, flags: Int) {
-//            with(parcel) {
-//                writeString(fix?.toString())
-//            }
-//        }
-//
-//        override fun create(parcel: Parcel): FixSchema = with(parcel) {
-//            FixSchema(
-//                fix = readString()?.toBigDecimal()
-//            )
-//        }
-
+    companion object : Deserializer<FixSchema> {
         override fun deserialize(json: JsonObject): FixSchema = with(json) {
             FixSchema(
                 fix = this[FIX].asBigDecimal
