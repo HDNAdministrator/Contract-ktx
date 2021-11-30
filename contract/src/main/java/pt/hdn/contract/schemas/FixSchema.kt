@@ -18,7 +18,7 @@ data class FixSchema(
 
     //region vars
     @IgnoredOnParcel @Expose @SourceType override var source: Int? = SourceType.NONE
-    @IgnoredOnParcel @Expose @SchemaType override val uuid: String = SchemaType.FIX
+    @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.FIX
     @IgnoredOnParcel @Err override val isValid: Int; get() = if (fix?.let { it == ZERO } != false) Err.FIX else Err.NONE
     //endregion vars
 

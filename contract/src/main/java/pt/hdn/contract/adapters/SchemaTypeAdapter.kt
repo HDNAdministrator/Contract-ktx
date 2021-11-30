@@ -1,7 +1,7 @@
 package pt.hdn.contract.adapters
 
 import com.google.gson.*
-import pt.hdn.contract.annotations.Parameter.Companion.UUID
+import pt.hdn.contract.annotations.Parameter.Companion.ID
 import pt.hdn.contract.annotations.SchemaType.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType.Companion.RATE
 import pt.hdn.contract.annotations.SchemaType.Companion.COMMISSION
@@ -9,7 +9,6 @@ import pt.hdn.contract.annotations.SchemaType.Companion.OBJECTIVE
 import pt.hdn.contract.annotations.SchemaType.Companion.THRESHOLD
 import pt.hdn.contract.schemas.*
 import java.lang.reflect.Type
-import kotlin.reflect.KClass
 
 class SchemaTypeAdapter: JsonSerializer<Schema?>, JsonDeserializer<Schema?> {
     override fun serialize(src: Schema?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement? {
@@ -32,7 +31,7 @@ class SchemaTypeAdapter: JsonSerializer<Schema?>, JsonDeserializer<Schema?> {
         return json
             ?.asJsonObject
             ?.run {
-                when (this[UUID].asString) {
+                when (this[ID].asInt) {
                     FIX -> FixSchema::class.java
                     RATE -> RateSchema::class.java
                     COMMISSION -> CommissionSchema::class.java

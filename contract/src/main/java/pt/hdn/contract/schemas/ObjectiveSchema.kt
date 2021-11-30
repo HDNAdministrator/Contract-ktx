@@ -24,7 +24,7 @@ data class ObjectiveSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @SchemaType @Expose override val uuid: String = SchemaType.OBJECTIVE
+    @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.OBJECTIVE
     @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
