@@ -20,7 +20,7 @@ data class RateSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.RATE
+    @IgnoredOnParcel @Expose @SchemaType override val uuid: String = SchemaType.RATE
     @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 

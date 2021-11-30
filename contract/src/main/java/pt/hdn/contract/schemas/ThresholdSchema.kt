@@ -23,7 +23,7 @@ data class ThresholdSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.THRESHOLD
+    @IgnoredOnParcel @Expose @SchemaType override val uuid: String = SchemaType.THRESHOLD
     @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 

@@ -25,7 +25,7 @@ data class CommissionSchema(
 ) : Schema {
 
     //region vars
-    @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
+    @IgnoredOnParcel @SchemaType @Expose override val uuid: String = SchemaType.COMMISSION
     @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 

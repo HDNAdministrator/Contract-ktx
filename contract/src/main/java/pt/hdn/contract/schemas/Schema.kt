@@ -8,7 +8,7 @@ import java.math.BigDecimal
 
 interface Schema: Parcelable, Cloneable {
     @SourceType var source: Int?
-    @SchemaType val id: Int
+    @SchemaType val uuid: String
     @Err val isValid: Int
 
     fun calculate(value: BigDecimal? = null): BigDecimal

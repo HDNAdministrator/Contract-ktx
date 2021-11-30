@@ -1,7 +1,7 @@
 package pt.hdn.contract.adapters
 
 import com.google.gson.*
-import pt.hdn.contract.annotations.Parameter.Companion.ID
+import pt.hdn.contract.annotations.Parameter.Companion.UUID
 import pt.hdn.contract.annotations.SchemaType.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType.Companion.RATE
 import pt.hdn.contract.annotations.SchemaType.Companion.COMMISSION
@@ -32,7 +32,7 @@ class SchemaTypeAdapter: JsonSerializer<Schema?>, JsonDeserializer<Schema?> {
         return json
             ?.asJsonObject
             ?.run {
-                when (this[ID].asInt) {
+                when (this[UUID].asString) {
                     FIX -> FixSchema::class.java
                     RATE -> RateSchema::class.java
                     COMMISSION -> CommissionSchema::class.java
