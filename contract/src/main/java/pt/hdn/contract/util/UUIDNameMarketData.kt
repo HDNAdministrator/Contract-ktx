@@ -6,14 +6,14 @@ import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.MarketType
 
 @Parcelize
-data class IdNameMarketData(
-    @Expose val id: Int = -1,
+data class UUIDNameMarketData(
+    @Expose val uuid: String = "",
     @Expose val name: String = "",
     @Expose @MarketType val marketType: Int = MarketType.NONE
 ) : Parcelable {
     override fun toString(): String = name
 
-    fun getSpinnerHeader(text: String) = IdNameMarketData(
+    fun getSpinnerHeader(text: String) = UUIDNameMarketData(
             name = text
     )
 }

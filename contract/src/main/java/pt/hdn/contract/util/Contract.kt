@@ -84,44 +84,6 @@ data class Contract(
             sellerId != other.sellerId -> false
             else -> true
         }
-//        if (this === other) return true
-//        if (other !is Contract) return false
-//
-//        if (tasks != other.tasks) return false
-//        if (recurrence != other.recurrence) return false
-//        if (buyerId != other.buyerId) return false
-//        if (buyerDeputyId != other.buyerDeputyId) return false
-//        if (sellerId != other.sellerId) return false
-//        if (sellerDeputyId != other.sellerDeputyId) return false
-//        if (witnessId != other.witnessId) return false
-//        if (buyerTimestamp != other.buyerTimestamp) return false
-//        if (buyerDeputyTimestamp != other.buyerDeputyTimestamp) return false
-//        if (sellerTimestamp != other.sellerTimestamp) return false
-//        if (sellerDeputyTimestamp != other.sellerDeputyTimestamp) return false
-//        if (witnessTimestamp != other.witnessTimestamp) return false
-//        if (buyerSignature != null) {
-//            if (other.buyerSignature == null) return false
-//            if (!buyerSignature.contentEquals(other.buyerSignature)) return false
-//        } else if (other.buyerSignature != null) return false
-//        if (buyerDeputySignature != null) {
-//            if (other.buyerDeputySignature == null) return false
-//            if (!buyerDeputySignature.contentEquals(other.buyerDeputySignature)) return false
-//        } else if (other.buyerDeputySignature != null) return false
-//        if (sellerSignature != null) {
-//            if (other.sellerSignature == null) return false
-//            if (!sellerSignature.contentEquals(other.sellerSignature)) return false
-//        } else if (other.sellerSignature != null) return false
-//        if (sellerDeputySignature != null) {
-//            if (other.sellerDeputySignature == null) return false
-//            if (!sellerDeputySignature.contentEquals(other.sellerDeputySignature)) return false
-//        } else if (other.sellerDeputySignature != null) return false
-//        if (witnessSignature != null) {
-//            if (other.witnessSignature == null) return false
-//            if (!witnessSignature.contentEquals(other.witnessSignature)) return false
-//        } else if (other.witnessSignature != null) return false
-//        if (uuid != other.uuid) return false
-
-        return true
     }
 
     override fun hashCode(): Int {

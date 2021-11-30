@@ -4,15 +4,14 @@ import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.schemas.Schema
 
 @Parcelize
 data class Task(
-    @Expose var specialityType: IdNameMarketData,
+    @Expose var specialityType: UUIDNameMarketData,
     @Expose var schemas: MutableList<Schema> = mutableListOf(),
-    @Expose var responsibilities: List<IdNameData>? = null,
+    @Expose var responsibilities: List<UUIDNameData>? = null,
     @Expose var exclusivity: Boolean? = null
 ) : Parcelable, Cloneable {
 
