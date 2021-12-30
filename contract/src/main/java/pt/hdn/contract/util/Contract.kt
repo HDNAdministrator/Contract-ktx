@@ -109,7 +109,7 @@ data class Contract(
 
     fun toJson(): String = gsonBuilder.create().toJson(this)
 
-    @Err private fun validate(contract: Contract? = null): Int {
+    @Err fun validate(contract: Contract? = null): Int {
         var err = Err.NONE
 
         return when {
