@@ -24,7 +24,6 @@ data class ThresholdSchema(
 
     //region vars
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.THRESHOLD
-    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
     companion object : Deserializer<ThresholdSchema> {
@@ -62,10 +61,10 @@ data class ThresholdSchema(
 
     override fun clone(): ThresholdSchema = copy()
 
-    @Err private fun validate(): Int {
-        threshold?.let { it > ZERO } == true && isAbove != null
-
+    @Err override fun validate(schema: Schema?): Int {
         return when {
+            schema?.let { it !is ThresholdSchema } == true -> Err.DIFF_SCHEMA
+            schema?.let { this == it } == true -> Err.NO_CHANGE
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
             threshold?.let { it <= ZERO } != false -> Err.THRESHOLD

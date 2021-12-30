@@ -21,7 +21,6 @@ data class RateSchema(
 
     //region vars
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.RATE
-    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
     companion object : Deserializer<RateSchema> {
@@ -53,8 +52,10 @@ data class RateSchema(
 
     override fun clone(): RateSchema = copy()
 
-    @Err private fun validate(): Int {
+    @Err override fun validate(schema: Schema?): Int {
         return when {
+            schema?.let { it !is RateSchema } == true -> Err.DIFF_SCHEMA
+            schema?.let { this == it } == true -> Err.NO_CHANGE
             rate?.let { it == ZERO } != false -> Err.RATE
             source == null -> Err.SOURCE
             else -> Err.NONE

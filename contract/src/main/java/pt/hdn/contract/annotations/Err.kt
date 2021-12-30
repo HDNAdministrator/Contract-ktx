@@ -4,7 +4,7 @@ import androidx.annotation.IntDef
 import kotlin.annotation.AnnotationTarget.*
 
 @Retention(AnnotationRetention.SOURCE)
-@Target(FUNCTION, PROPERTY)
+@Target(FUNCTION, PROPERTY, PROPERTY, LOCAL_VARIABLE)
 @IntDef()
 annotation class Err {
     companion object {
@@ -28,5 +28,7 @@ annotation class Err {
         const val SCHEMAS = 17
         const val RESPONSIBILITIES = 18
         const val TASKS = 19
+        const val NO_CHANGE = 20
+        const val DIFF_SCHEMA = 21
     }
 }

@@ -9,9 +9,10 @@ import java.math.BigDecimal
 interface Schema: Parcelable, Cloneable {
     @SourceType var source: Int?
     @SchemaType val id: Int
-    @Err val isValid: Int
 
     fun calculate(value: BigDecimal? = null): BigDecimal
 
     public override fun clone(): Schema
+
+    @Err fun validate(schema: Schema?): Int
 }

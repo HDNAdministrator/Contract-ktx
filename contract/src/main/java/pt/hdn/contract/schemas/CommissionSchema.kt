@@ -26,7 +26,6 @@ data class CommissionSchema(
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
-    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
     companion object : Deserializer<CommissionSchema> {
@@ -64,8 +63,10 @@ data class CommissionSchema(
 
     override fun clone(): CommissionSchema = copy()
 
-    @Err private fun validate(): Int {
+    @Err override fun validate(schema: Schema?): Int {
         return when {
+            schema?.let { it !is CommissionSchema } == true -> Err.DIFF_SCHEMA
+            schema?.let { this == it } == true -> Err.NO_CHANGE
             cut?.let { it <= ZERO || it >= ONE } != false -> Err.CUT
             source == null -> Err.SOURCE
             lowerBound?.let { it < ZERO } == true -> Err.LOWER_BOUND

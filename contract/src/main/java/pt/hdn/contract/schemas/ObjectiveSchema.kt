@@ -25,7 +25,6 @@ data class ObjectiveSchema(
 
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.OBJECTIVE
-    @IgnoredOnParcel @Err override val isValid: Int; get() = validate()
     //endregion vars
 
     companion object : Deserializer<ObjectiveSchema> {
@@ -63,8 +62,10 @@ data class ObjectiveSchema(
 
     override fun clone(): ObjectiveSchema = copy()
 
-    @Err private fun validate(): Int {
+    @Err override fun validate(schema: Schema?): Int {
         return when {
+            schema?.let { it !is ObjectiveSchema } == true -> Err.DIFF_SCHEMA
+            schema?.let { this == it } == true -> Err.NO_CHANGE
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
             lowerBound?.let { it < ZERO } == true -> Err.LOWER_BOUND

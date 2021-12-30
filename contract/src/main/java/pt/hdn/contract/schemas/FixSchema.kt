@@ -19,7 +19,6 @@ data class FixSchema(
     //region vars
     @IgnoredOnParcel @Expose @SourceType override var source: Int? = SourceType.NONE
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.FIX
-    @IgnoredOnParcel @Err override val isValid: Int; get() = if (fix?.let { it == ZERO } != false) Err.FIX else Err.NONE
     //endregion vars
 
     companion object : Deserializer<FixSchema> {
@@ -45,5 +44,14 @@ data class FixSchema(
 
     override fun hashCode(): Int {
         return fix?.hashCode() ?: 0
+    }
+
+    @Err override fun validate(schema: Schema?): Int {
+        return when {
+            schema?.let { it !is FixSchema } == true -> Err.DIFF_SCHEMA
+            schema?.let { this == it } == true -> Err.NO_CHANGE
+            fix?.let { it == ZERO } != false -> Err.FIX
+            else -> Err.NONE
+        }
     }
 }
