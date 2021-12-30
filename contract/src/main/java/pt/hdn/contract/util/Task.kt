@@ -31,7 +31,7 @@ data class Task(
 
         return when {
             schemas.isEmpty() -> Err.SCHEMAS
-            schemas.all { it.isValid.let { err = it; it != Err.NONE } } -> err
+            schemas.all { it.validate().also { err = it } != Err.NONE } -> err
             responsibilities?.isEmpty()  == true -> Err.RESPONSIBILITIES
             else -> Err.NONE
         }

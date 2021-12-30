@@ -14,5 +14,5 @@ interface Schema: Parcelable, Cloneable {
 
     public override fun clone(): Schema
 
-    @Err fun validate(schema: Schema?): Int
+    @Err fun validate(schema: Schema? = null): Int
 }
