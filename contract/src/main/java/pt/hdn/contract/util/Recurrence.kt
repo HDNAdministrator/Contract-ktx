@@ -19,10 +19,6 @@ data class Recurrence(
     @Expose private var dow: MutableList<Int>? = null
 ) : Parcelable {
 
-    //region vars
-    @Err val isValid: Int; get() = validate()
-    //endregion vars
-
 //    companion object : Parceler<Recurrence> {
 //        override fun create(parcel: Parcel): Recurrence {
 //            return with(parcel) {
@@ -142,8 +138,9 @@ data class Recurrence(
             }
     }
 
-    @Err private fun validate(): Int {
+    @Err fun validate(recurrence: Recurrence? = null): Int {
         return when {
+            recurrence?.let { this == it } == true -> Err.NO_CHANGE
             daysType == DaysType.DAYS && days.isNullOrEmpty()-> Err.DAYS
             daysType == DaysType.DOW && dow.isNullOrEmpty() -> Err.DOW
             daysType == DaysType.PERIOD && daysPeriod == null -> Err.DAYS_PERIOD

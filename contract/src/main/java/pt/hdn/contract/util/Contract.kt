@@ -37,7 +37,6 @@ data class Contract(
     //region vars
     @IgnoredOnParcel val hasBuyerSigned: Boolean; get() = buyerSignature != null && buyerDeputySignature != null
     @IgnoredOnParcel val hasSellerSigned: Boolean; get() = sellerSignature != null && sellerDeputySignature != null
-    @IgnoredOnParcel @Err val isValid: Int get() = validate()
     //endregion vars
 
     companion object {
@@ -110,12 +109,13 @@ data class Contract(
 
     fun toJson(): String = gsonBuilder.create().toJson(this)
 
-    @Err private fun validate(): Int {
+    @Err private fun validate(contract: Contract? = null): Int {
         var err = Err.NONE
 
         return when {
+            contract?.let { this == it } == true -> Err.NO_CHANGE
             tasks.isEmpty() -> Err.TASKS
-            tasks.all { it.isValid.let { err = it; it != Err.NONE } } || recurrence.isValid.let { err = it; it != Err.NONE } -> err
+            tasks.all { it.validate().also { err = it } != Err.NONE } || recurrence.validate().also { err = it } != Err.NONE -> err
             else -> Err.NONE
         }
     }

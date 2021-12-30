@@ -15,10 +15,6 @@ data class Task(
     @Expose var exclusivity: Boolean? = null
 ) : Parcelable, Cloneable {
 
-    //region vars
-    @IgnoredOnParcel @Err val isValid: Int; get() = validate()
-    //endregion vars
-
     public override fun clone(): Task {
         return copy(
             schemas = schemas.mapTo(mutableListOf()) { it.clone() },
@@ -26,10 +22,11 @@ data class Task(
         )
     }
 
-    @Err private fun validate(): Int {
+    @Err fun validate(task: Task? = null): Int {
         var err = Err.NONE
 
         return when {
+            task?.let { this == it } == true -> Err.NO_CHANGE
             schemas.isEmpty() -> Err.SCHEMAS
             schemas.all { it.validate().also { err = it } != Err.NONE } -> err
             responsibilities?.isEmpty()  == true -> Err.RESPONSIBILITIES
