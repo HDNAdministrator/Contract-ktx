@@ -26,9 +26,9 @@ data class Task(
         var err = Err.NONE
 
         return when {
-            task?.let { this == it } == true -> Err.NO_CHANGE
+            this == task -> Err.NO_CHANGE
             schemas.isEmpty() -> Err.SCHEMAS
-            schemas.all { it.validate().also { err = it } != Err.NONE } -> err
+            schemas.any { it.validate().also { err = it } != Err.NONE } -> err
             responsibilities?.isEmpty()  == true -> Err.RESPONSIBILITIES
             else -> Err.NONE
         }

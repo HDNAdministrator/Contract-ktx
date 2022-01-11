@@ -19,50 +19,7 @@ data class Recurrence(
     @Expose private var dow: MutableList<Int>? = null
 ) : Parcelable {
 
-//    companion object : Parceler<Recurrence> {
-//        override fun create(parcel: Parcel): Recurrence {
-//            return with(parcel) {
-//                Recurrence(
-//                    start = ZonedDateTime.parse(readString()),
-//                    monthType = readInt(),
-//                    daysType = readInt(),
-//                    finish = readString()?.let { ZonedDateTime.parse(it) },
-//                    monthsPeriod = readInt().let { if (it == 1) readInt() else null },
-//                    daysPeriod = readInt().let { if (it == 1) readInt() else null },
-//                    months = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-//                    days = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null },
-//                    dow = readInt().let { if (it == 1) readArrayList(Int::class.java.classLoader) as MutableList<Int> else null }
-//                )
-//            }
-//        }
-//
-//        override fun Recurrence.write(parcel: Parcel, flags: Int) {
-//            with(parcel) {
-//                writeString(start.toString())
-//                writeInt(monthType)
-//                writeInt(daysType)
-//                writeString(finish?.toString())
-//                monthsPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
-//                daysPeriod?.run { writeInt(1); writeInt(this) } ?: writeInt(0)
-//                months?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-//                days?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-//                dow?.run { writeInt(1); writeList(this) } ?: writeInt(0)
-//            }
-//        }
-//    }
-
-//    private constructor(start: ZonedDateTime, @MonthType monthType: Int, @DaysType daysType: Int, finish: ZonedDateTime?, @MonthsPeriod monthsPeriod: Int?, @DaysPeriod daysPeriod: Int?, months: MutableList<Int>?, days: MutableList<Int>?, dow: MutableList<Int>?) : this(start, monthType, daysType) {
-//        this.finish = finish
-//        this.monthsPeriod = monthsPeriod
-//        this.daysPeriod = daysPeriod
-//        this.months = months
-//        this.days = days
-//        this.dow = dow
-//    }
-
-    fun removeMonth(@Month month: Int) {
-        months?.remove(month)
-    }
+    fun removeMonth(@Month month: Int) { months?.remove(month) }
 
     fun getMonths(): List<@Month Int>? = months
 
@@ -87,9 +44,7 @@ data class Recurrence(
         this.months = null
     }
 
-    fun removeDay(@Day day: Int) {
-        days?.remove(day)
-    }
+    fun removeDay(@Day day: Int) { days?.remove(day) }
 
     fun getDays(): List<@Day Int>? = days
 
@@ -116,9 +71,7 @@ data class Recurrence(
         this.daysPeriod = daysPeriod
     }
 
-    fun removeDow(@DayOfWeek dayOfWeek: Int) {
-        dow?.remove(dayOfWeek)
-    }
+    fun removeDow(@DayOfWeek dayOfWeek: Int) { dow?.remove(dayOfWeek) }
 
     fun getDow(): List<@DayOfWeek Int>? = dow
 
@@ -140,7 +93,7 @@ data class Recurrence(
 
     @Err fun validate(recurrence: Recurrence? = null): Int {
         return when {
-            recurrence?.let { this == it } == true -> Err.NO_CHANGE
+           this == recurrence -> Err.NO_CHANGE
             daysType == DaysType.DAYS && days.isNullOrEmpty()-> Err.DAYS
             daysType == DaysType.DOW && dow.isNullOrEmpty() -> Err.DOW
             daysType == DaysType.PERIOD && daysPeriod == null -> Err.DAYS_PERIOD

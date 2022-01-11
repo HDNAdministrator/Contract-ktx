@@ -1,14 +1,9 @@
 package pt.hdn.contract.schemas
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.Err
-import pt.hdn.contract.annotations.Parameter.Companion.CUT
-import pt.hdn.contract.annotations.Parameter.Companion.LOWER_BOUND
-import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
-import pt.hdn.contract.annotations.Parameter.Companion.UPPER_BOUND
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
@@ -27,17 +22,6 @@ data class CommissionSchema(
     //region vars
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.COMMISSION
     //endregion vars
-
-    companion object : Deserializer<CommissionSchema> {
-        override fun deserialize(json: JsonObject): CommissionSchema = with(json) {
-            CommissionSchema(
-                cut = this[CUT].asBigDecimal,
-                source = this[SOURCE].asInt,
-                lowerBound = this[LOWER_BOUND]?.asBigDecimal,
-                upperBound = this[UPPER_BOUND]?.asBigDecimal
-            )
-        }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -66,7 +50,7 @@ data class CommissionSchema(
     @Err override fun validate(schema: Schema?): Int {
         return when {
             schema?.let { it !is CommissionSchema } == true -> Err.DIFF_SCHEMA
-            schema?.let { this == it } == true -> Err.NO_CHANGE
+            this == schema -> Err.NO_CHANGE
             cut?.let { it <= ZERO || it >= ONE } != false -> Err.CUT
             source == null -> Err.SOURCE
             lowerBound?.let { it < ZERO } == true -> Err.LOWER_BOUND

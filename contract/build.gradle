@@ -59,7 +59,6 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:1.7.0"
-    implementation "com.google.code.gson:gson:2.8.9"
-    testImplementation "junit:junit:4.13.2"
+    api "androidx.core:core-ktx:1.7.0"
+    api "com.google.code.gson:gson:2.8.9"
 }

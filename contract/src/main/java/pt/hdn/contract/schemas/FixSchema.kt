@@ -1,11 +1,9 @@
 package pt.hdn.contract.schemas
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.Err
-import pt.hdn.contract.annotations.Parameter.Companion.FIX
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
@@ -21,14 +19,6 @@ data class FixSchema(
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.FIX
     //endregion vars
 
-    companion object : Deserializer<FixSchema> {
-        override fun deserialize(json: JsonObject): FixSchema = with(json) {
-            FixSchema(
-                fix = this[FIX].asBigDecimal
-            )
-        }
-    }
-    
     override fun calculate(value: BigDecimal?): BigDecimal = fix!!
 
     override fun clone(): FixSchema = copy()
@@ -49,7 +39,7 @@ data class FixSchema(
     @Err override fun validate(schema: Schema?): Int {
         return when {
             schema?.let { it !is FixSchema } == true -> Err.DIFF_SCHEMA
-            schema?.let { this == it } == true -> Err.NO_CHANGE
+            this == schema -> Err.NO_CHANGE
             fix?.let { it == ZERO } != false -> Err.FIX
             else -> Err.NONE
         }

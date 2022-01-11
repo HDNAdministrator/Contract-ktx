@@ -23,15 +23,6 @@ data class RateSchema(
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.RATE
     //endregion vars
 
-    companion object : Deserializer<RateSchema> {
-        override fun deserialize(json: JsonObject): RateSchema = with(json) {
-            RateSchema(
-                rate = this[RATE].asBigDecimal,
-                source = this[SOURCE].asInt
-            )
-        }
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is RateSchema) return false
@@ -55,7 +46,7 @@ data class RateSchema(
     @Err override fun validate(schema: Schema?): Int {
         return when {
             schema?.let { it !is RateSchema } == true -> Err.DIFF_SCHEMA
-            schema?.let { this == it } == true -> Err.NO_CHANGE
+            this == schema -> Err.NO_CHANGE
             rate?.let { it == ZERO } != false -> Err.RATE
             source == null -> Err.SOURCE
             else -> Err.NONE

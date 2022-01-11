@@ -113,9 +113,9 @@ data class Contract(
         var err = Err.NONE
 
         return when {
-            contract?.let { this == it } == true -> Err.NO_CHANGE
+            this == contract -> Err.NO_CHANGE
             tasks.isEmpty() -> Err.TASKS
-            tasks.all { it.validate().also { err = it } != Err.NONE } || recurrence.validate().also { err = it } != Err.NONE -> err
+            tasks.any { it.validate().also { err = it } != Err.NONE } || recurrence.validate().also { err = it } != Err.NONE -> err
             else -> Err.NONE
         }
     }

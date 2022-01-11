@@ -1,0 +1,16 @@
+{
+    "pt_PT": {
+        "0": "Fixo",
+        "1": "Variável",
+        "2": "Comissão",
+        "3": "Objectivo",
+        "4": "Limite"
+    },
+    "en_GB": {
+        "0": "Fix",
+        "1": "Rate",
+        "2": "Commission",
+        "3": "Objective",
+        "4": "Threshold"
+    }
+}

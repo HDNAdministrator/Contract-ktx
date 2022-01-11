@@ -27,17 +27,6 @@ data class ObjectiveSchema(
     @IgnoredOnParcel @SchemaType @Expose override val id: Int = SchemaType.OBJECTIVE
     //endregion vars
 
-    companion object : Deserializer<ObjectiveSchema> {
-        override fun deserialize(json: JsonObject): ObjectiveSchema = with(json) {
-            ObjectiveSchema(
-                bonus = this[BONUS].asBigDecimal,
-                source = this[SOURCE].asInt,
-                lowerBound = this[LOWER_BOUND]?.asBigDecimal,
-                upperBound = this[UPPER_BOUND].asBigDecimal
-            )
-        }
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ObjectiveSchema) return false
@@ -65,7 +54,7 @@ data class ObjectiveSchema(
     @Err override fun validate(schema: Schema?): Int {
         return when {
             schema?.let { it !is ObjectiveSchema } == true -> Err.DIFF_SCHEMA
-            schema?.let { this == it } == true -> Err.NO_CHANGE
+            this == schema -> Err.NO_CHANGE
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
             lowerBound?.let { it < ZERO } == true -> Err.LOWER_BOUND

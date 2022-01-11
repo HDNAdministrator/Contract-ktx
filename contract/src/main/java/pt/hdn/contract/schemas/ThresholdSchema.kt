@@ -1,14 +1,9 @@
 package pt.hdn.contract.schemas
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.Err
-import pt.hdn.contract.annotations.Parameter.Companion.BONUS
-import pt.hdn.contract.annotations.Parameter.Companion.IS_ABOVE
-import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
-import pt.hdn.contract.annotations.Parameter.Companion.THRESHOLD
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
@@ -25,17 +20,6 @@ data class ThresholdSchema(
     //region vars
     @IgnoredOnParcel @Expose @SchemaType override val id: Int = SchemaType.THRESHOLD
     //endregion vars
-
-    companion object : Deserializer<ThresholdSchema> {
-        override fun deserialize(json: JsonObject): ThresholdSchema = with(json) {
-            ThresholdSchema(
-                bonus = this[BONUS].asBigDecimal,
-                source = this[SOURCE].asInt,
-                threshold = this[THRESHOLD].asBigDecimal,
-                isAbove = this[IS_ABOVE].asBoolean
-            )
-        }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -64,7 +48,7 @@ data class ThresholdSchema(
     @Err override fun validate(schema: Schema?): Int {
         return when {
             schema?.let { it !is ThresholdSchema } == true -> Err.DIFF_SCHEMA
-            schema?.let { this == it } == true -> Err.NO_CHANGE
+            this == schema -> Err.NO_CHANGE
             bonus?.let { it <= ZERO } != false -> Err.BONUS
             source == null -> Err.SOURCE
             threshold?.let { it <= ZERO } != false -> Err.THRESHOLD
