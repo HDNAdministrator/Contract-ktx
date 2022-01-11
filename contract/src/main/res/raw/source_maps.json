@@ -1,0 +1,18 @@
+{
+    "pt_PT": {
+        "0": "Receita Nível Individual",
+        "1": "Receita Nível de Equipa",
+        "2": "Receita Nível de Departamento",
+        "3": "Receita Nível da Empresa",
+        "4": "Por Distância",
+        "5": "Por Tempo"
+    },
+    "en_GB": {
+        "0": "Individual Revenue",
+        "1": "Team Revenue",
+        "2": "Department Revenue",
+        "3": "Company Revenue",
+        "4": "By Distance",
+        "5": "By Time"
+    }
+}

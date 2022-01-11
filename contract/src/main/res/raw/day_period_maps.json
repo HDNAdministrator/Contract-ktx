@@ -1,0 +1,12 @@
+{
+    "pt_PT": {
+        "0": "Dias Úteis",
+        "1": "Fins-de-Semana",
+        "2": "Todos os Dias"
+    },
+    "en_GB": {
+        "0": "Work Days",
+        "1": "Weekends",
+        "2": "Every Day"
+    }
+}

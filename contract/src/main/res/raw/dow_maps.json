@@ -1,0 +1,20 @@
+{
+    "pt_PT": {
+        "0": "Segunda",
+        "1": "Terça",
+        "2": "Quarta",
+        "3": "Quinta",
+        "4": "Sexta",
+        "5": "Sábado",
+        "6": "Domingo"
+    },
+    "en_GB": {
+        "0": "Monday",
+        "1": "Tuesday",
+        "2": "Wednsday",
+        "3": "Thurdays",
+        "4": "Friday",
+        "5": "Saturday",
+        "6": "Sunday"
+    }
+}
