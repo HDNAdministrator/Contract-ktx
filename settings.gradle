@@ -1,2 +1,2 @@
 include ':contract'
-rootProject.name = "Contract-ktx"
+rootProject.name = "Contract"

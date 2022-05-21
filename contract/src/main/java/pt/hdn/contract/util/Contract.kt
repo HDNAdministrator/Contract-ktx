@@ -11,10 +11,12 @@ import pt.hdn.contract.adapters.ZonedDateTimeTypeAdapter
 import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.schemas.Schema
 import java.time.ZonedDateTime
+import java.util.*
 
 @Parcelize
 data class Contract(
-    @Expose val tasks: MutableList<Task>,
+    @Expose val uuid: UUID = UUID.randomUUID(),
+    @Expose val tasks: MutableMap<UUIDNameMarketData, Task>,
     @Expose val recurrence: Recurrence,
     @Expose val buyerId: String,
     @Expose val buyerDeputyId: String,
@@ -30,8 +32,7 @@ data class Contract(
     @Expose val buyerDeputySignature: ByteArray? = null,
     @Expose val sellerSignature: ByteArray? = null,
     @Expose val sellerDeputySignature: ByteArray? = null,
-    @Expose val witnessSignature: ByteArray? = null,
-    @Expose val uuid: String? = null
+    @Expose val witnessSignature: ByteArray? = null
 ) : Parcelable, Cloneable {
 
     //region vars
@@ -40,19 +41,20 @@ data class Contract(
     //endregion vars
 
     companion object {
-        val gsonBuilder: GsonBuilder by lazy { GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter())
-            .registerTypeAdapter(Schema::class.java, SchemaTypeAdapter())
-            .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
-        }
+        val gsonBuilder: GsonBuilder by lazy {
+            GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter())
+                .registerTypeAdapter(Schema::class.java, SchemaTypeAdapter())
+                .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
+            }
 
         fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
     }
 
     public override fun clone(): Contract {
         return copy(
-            tasks = tasks.mapTo(mutableListOf()) { it.clone() },
+            tasks = tasks.mapValuesTo(mutableMapOf()) { it.value.clone() },
             recurrence = recurrence.copy(),
             buyerId = buyerId,
             buyerDeputyId = buyerDeputyId,
@@ -68,8 +70,7 @@ data class Contract(
             buyerDeputySignature = null,
             sellerSignature = null,
             sellerDeputySignature = null,
-            witnessSignature = null,
-            uuid = null
+            witnessSignature = null
         )
     }
 
@@ -86,7 +87,8 @@ data class Contract(
     }
 
     override fun hashCode(): Int {
-        var result = tasks.hashCode()
+        var result = uuid.hashCode()
+        result = 31 * result + tasks.hashCode()
         result = 31 * result + recurrence.hashCode()
         result = 31 * result + buyerId.hashCode()
         result = 31 * result + buyerDeputyId.hashCode()
@@ -103,7 +105,6 @@ data class Contract(
         result = 31 * result + (sellerSignature?.contentHashCode() ?: 0)
         result = 31 * result + (sellerDeputySignature?.contentHashCode() ?: 0)
         result = 31 * result + (witnessSignature?.contentHashCode() ?: 0)
-        result = 31 * result + (uuid?.hashCode() ?: 0)
         return result
     }
 
@@ -115,7 +116,7 @@ data class Contract(
         return when {
             this == contract -> Err.NO_CHANGE
             tasks.isEmpty() -> Err.TASKS
-            tasks.any { it.validate().also { err = it } != Err.NONE } || recurrence.validate().also { err = it } != Err.NONE -> err
+            tasks.values.any { it.validate().also { err = it } != Err.NONE } || recurrence.validate(contract?.recurrence).also { err = it } != Err.NONE -> err
             else -> Err.NONE
         }
     }

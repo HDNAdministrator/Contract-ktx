@@ -5,7 +5,7 @@ import kotlin.annotation.AnnotationTarget.*
 
 @Retention(AnnotationRetention.SOURCE)
 @Target(CLASS, TYPE, VALUE_PARAMETER, FIELD)
-@StringDef(Parameter.FIX, Parameter.RATE, Parameter.CUT, Parameter.BONUS, Parameter.SOURCE, Parameter.LOWER_BOUND, Parameter.UPPER_BOUND, Parameter.THRESHOLD, Parameter.IS_ABOVE)
+@StringDef
 annotation class Parameter {
     companion object {
        const val ID: String = "id"

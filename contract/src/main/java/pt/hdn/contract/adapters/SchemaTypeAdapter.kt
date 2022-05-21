@@ -24,9 +24,7 @@ class SchemaTypeAdapter: JsonSerializer<Schema?>, JsonDeserializer<Schema?> {
                     OBJECTIVE -> ObjectiveSchema::class.java
                     THRESHOLD -> ThresholdSchema::class.java
                     else -> null
-                }?.let {
-                    context?.deserialize(this, it)
-                }
+                }?.let { context?.deserialize(this, it) }
             }
     }
 }
