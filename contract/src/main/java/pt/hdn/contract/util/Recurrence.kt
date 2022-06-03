@@ -25,24 +25,11 @@ data class Recurrence(
 
     fun addMonth(@Month month: Int) {
         months
-            ?.apply {
-                if (!contains(month)) {
-                    add(month)
-
-                    sort()
-                }
-            } ?: run {
-                this.monthType = MonthType.MONTHS
-                this.monthsPeriod = null
-                this.months = mutableListOf(month)
-            }
+            ?.apply { if (!contains(month)) { add(month); sort() } }
+            ?: run { this.monthType = MonthType.MONTHS; this.monthsPeriod = null; this.months = mutableListOf(month) }
     }
 
-    fun setMonthPeriod(@MonthsPeriod monthsPeriod: Int) {
-        this.monthType = MonthType.PERIOD
-        this.monthsPeriod = monthsPeriod
-        this.months = null
-    }
+    fun setMonthPeriod(@MonthsPeriod monthsPeriod: Int) { this.monthType = MonthType.PERIOD; this.monthsPeriod = monthsPeriod; this.months = null }
 
     fun removeDay(@Day day: Int) { days?.remove(day) }
 
@@ -50,26 +37,11 @@ data class Recurrence(
 
     fun addDay(@Day day: Int) {
         days
-            ?.apply {
-                if (!contains(day)) {
-                    add(day)
-
-                    sort()
-                }
-            } ?: run {
-                this.daysType = DaysType.DAYS
-                this.days = mutableListOf(day)
-                this.dow = null
-                this.daysPeriod = null
-            }
+            ?.apply { if (!contains(day)) { add(day); sort() } }
+            ?: run { this.daysType = DaysType.DAYS; this.days = mutableListOf(day); this.dow = null; this.daysPeriod = null }
     }
 
-    fun setDaysPeriod(@DaysPeriod daysPeriod: Int) {
-        this.daysType = DaysType.PERIOD
-        this.days = null
-        this.dow = null
-        this.daysPeriod = daysPeriod
-    }
+    fun setDaysPeriod(@DaysPeriod daysPeriod: Int) { this.daysType = DaysType.PERIOD; this.days = null; this.dow = null; this.daysPeriod = daysPeriod }
 
     fun removeDow(@DayOfWeek dayOfWeek: Int) { dow?.remove(dayOfWeek) }
 
@@ -77,18 +49,8 @@ data class Recurrence(
 
     fun addDow(@DayOfWeek dayOfWeek: Int) {
         dow
-            ?.apply {
-                if (!contains(dayOfWeek)) {
-                    add(dayOfWeek)
-
-                    sort()
-                }
-            } ?: run {
-                this.daysType = DaysType.DOW
-                this.dow = mutableListOf(dayOfWeek)
-                this.days = null
-                this.daysPeriod = null
-            }
+            ?.apply { if (!contains(dayOfWeek)) { add(dayOfWeek); sort() } }
+            ?: run { this.daysType = DaysType.DOW; this.dow = mutableListOf(dayOfWeek); this.days = null; this.daysPeriod = null }
     }
 
     @Err fun validate(recurrence: Recurrence? = null): Int {

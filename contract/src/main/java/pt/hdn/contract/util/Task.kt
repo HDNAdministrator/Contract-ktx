@@ -9,6 +9,7 @@ import pt.hdn.contract.schemas.Schema
 
 @Parcelize
 data class Task(
+    @Expose var specialityType: UUIDNameMarketData,
     @Expose var schemas: MutableList<Schema> = mutableListOf(),
     @Expose var responsibilities: List<UUIDNameData>? = null,
     @Expose var exclusivity: Boolean? = null

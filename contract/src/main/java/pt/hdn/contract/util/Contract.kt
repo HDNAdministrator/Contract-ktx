@@ -3,9 +3,11 @@ package pt.hdn.contract.util
 import android.os.Parcelable
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
+import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.adapters.ByteArrayTypeAdapter
+import pt.hdn.contract.adapters.MapTypeAdapter
 import pt.hdn.contract.adapters.SchemaTypeAdapter
 import pt.hdn.contract.adapters.ZonedDateTimeTypeAdapter
 import pt.hdn.contract.annotations.Err
@@ -16,7 +18,7 @@ import java.util.*
 @Parcelize
 data class Contract(
     @Expose val uuid: UUID = UUID.randomUUID(),
-    @Expose val tasks: MutableMap<UUIDNameMarketData, Task>,
+    @Expose val tasks: MutableList<Task>,
     @Expose val recurrence: Recurrence,
     @Expose val buyerId: String,
     @Expose val buyerDeputyId: String,
@@ -47,6 +49,7 @@ data class Contract(
                 .registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter())
                 .registerTypeAdapter(Schema::class.java, SchemaTypeAdapter())
                 .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
+                .registerTypeAdapter(object : TypeToken<Map<UUIDNameMarketData, Task>>() {}.type, MapTypeAdapter<UUIDNameMarketData, Task>())
             }
 
         fun from(json: String): Contract = gsonBuilder.create().fromJson(json, Contract::class.java)
@@ -54,7 +57,7 @@ data class Contract(
 
     public override fun clone(): Contract {
         return copy(
-            tasks = tasks.mapValuesTo(mutableMapOf()) { it.value.clone() },
+            tasks = tasks.mapTo(mutableListOf()) { it.clone() },
             recurrence = recurrence.copy(),
             buyerId = buyerId,
             buyerDeputyId = buyerDeputyId,
@@ -116,7 +119,7 @@ data class Contract(
         return when {
             this == contract -> Err.NO_CHANGE
             tasks.isEmpty() -> Err.TASKS
-            tasks.values.any { it.validate().also { err = it } != Err.NONE } || recurrence.validate(contract?.recurrence).also { err = it } != Err.NONE -> err
+            tasks.any { it.validate().also { err = it } != Err.NONE } || recurrence.validate(contract?.recurrence).also { err = it } != Err.NONE -> err
             else -> Err.NONE
         }
     }
