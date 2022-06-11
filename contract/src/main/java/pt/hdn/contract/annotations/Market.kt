@@ -4,8 +4,8 @@ import androidx.annotation.IntDef
 import kotlin.annotation.AnnotationRetention.SOURCE
 
 @Retention(SOURCE)
-@IntDef(MarketType.NONE, MarketType.PERSON, MarketType.SERVICE)
-annotation class MarketType {
+@IntDef(Market.NONE, Market.PERSON, Market.SERVICE)
+annotation class Market {
     companion object {
         const val NONE = 0
         const val PERSON = 1
