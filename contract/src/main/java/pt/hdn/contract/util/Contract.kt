@@ -6,10 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import pt.hdn.contract.adapters.ByteArrayTypeAdapter
-import pt.hdn.contract.adapters.MapTypeAdapter
-import pt.hdn.contract.adapters.SchemaTypeAdapter
-import pt.hdn.contract.adapters.ZonedDateTimeTypeAdapter
+import pt.hdn.contract.adapters.*
 import pt.hdn.contract.annotations.Err
 import pt.hdn.contract.schemas.Schema
 import java.time.ZonedDateTime
@@ -46,6 +43,7 @@ data class Contract(
         val gsonBuilder: GsonBuilder by lazy {
             GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(UUID::class.java, UUIDTypeAdapter())
                 .registerTypeAdapter(ByteArray::class.java, ByteArrayTypeAdapter())
                 .registerTypeAdapter(Schema::class.java, SchemaTypeAdapter())
                 .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())

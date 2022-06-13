@@ -1,18 +1,12 @@
 package pt.hdn.contract.schemas
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import pt.hdn.contract.annotations.Err
-import pt.hdn.contract.annotations.Parameter.Companion.BONUS
-import pt.hdn.contract.annotations.Parameter.Companion.LOWER_BOUND
-import pt.hdn.contract.annotations.Parameter.Companion.SOURCE
-import pt.hdn.contract.annotations.Parameter.Companion.UPPER_BOUND
 import pt.hdn.contract.annotations.SchemaType
 import pt.hdn.contract.annotations.SourceType
 import java.math.BigDecimal
-import java.math.BigDecimal.ONE
 import java.math.BigDecimal.ZERO
 
 @Parcelize
