@@ -30,5 +30,7 @@ annotation class Err {
         const val TASKS = 19
         const val NO_CHANGE = 20
         const val DIFF_SCHEMA = 21
+        const val MORE_THAN_ONE = 22
+        const val OVERLAP = 23
     }
 }
